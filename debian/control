@@ -1,0 +1,16 @@
+Source: co2monitor
+Section: utils
+Priority: extra
+Maintainer: Yann Büchau <yann.buechau@web.de>
+Build-Depends: debhelper (>= 8.0.0)
+Standards-Version: 3.9.2
+
+Package: co2monitor
+Architecture: all
+Depends: ${misc:Depends}, python3
+Conflicts: co2monitor
+Replaces: co2monitor
+Description: Monitor data from USB CO2 measurement devices.
+ Hendryk reverse-engineered the protocol of some CO2 measurement
+ devices sold under various names. This is an extended python
+ implementation that provides convenient functionality.
