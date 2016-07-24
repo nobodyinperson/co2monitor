@@ -16,6 +16,9 @@ class co2device(object):
         self.last_co2  = None
         self.last_temp = None
 
+        # Key retrieved from /dev/random, guaranteed to be random ;)
+        self.key = [0xc4, 0xc6, 0xc0, 0x92, 0x40, 0x23, 0xdc, 0x96]
+        
     @property
     def device(self):
         return self._device
@@ -67,34 +70,60 @@ class co2device(object):
     def hd(d):
         return " ".join("%02X" % e for e in d)
 
+    @staticmethod
+    def check_integrity(data,decrypted):
+        if decrypted[4] != 0x0d or \
+            (sum(decrypted[:3]) & 0xff) != decrypted[3]:
+            # there is some data integrity problem
+            logger.error("{crypt} => {decrypt}".format(
+                crypt=self.hd(data),decrypt=self.hd(decrypted)))
+            logger.error(" ".join(["Checksum error","(never mind if {}",
+                "is the correct co2monitor device node...)"]).format(
+                self.device))
+            return False
+        else:
+            return True
+
+    # connect to the co2 device
     def connect(self):
-        try: # if file is closed or was never opened yet...
-            if self.devfile.closed: raise Exception
-        except: # open it!
-            logger.info("opening co2 device file '{}'".format(self.device))
-            self.devfile = open(self.device, "a+b",  0) # Open device node
+        if os.path.exists(self.device): # device exists
+            try: # if file is closed or was never opened yet...
+                if self.devfile.closed: raise Exception
+            except: # open it!
+                logger.info("opening co2 device file '{}'".format(self.device))
+                self.devfile = open(self.device, "a+b",  0) # Open device node
+        else: # device does not exist
+            raise OSError("device '{}' does not exist.".format(self.device))
     
+    # disconnect from co2 device
     def disconnect(self):
         logger.info("closing co2 device file '{}'".format(self.device))
         self.devfile.close()
 
+    # request data from device (do not read!)
+    def request(self):
+        HIDIOCSFEATURE_9 = 0xC0094806
+        # python2:
+        #set_report = "\x00" + "".join(chr(e) for e in key)
+        # python3
+        set_report = bytearray(b'\x00') + bytearray(self.key)
+        fcntl.ioctl(self.devfile, HIDIOCSFEATURE_9, set_report)
+
+    # read raw (encrypted) data
     def read_raw(self):
         self.connect() # connect first
         # read data from co2monitor ( this takes a couple of seconds )
+        # python2
+        # return [chr(e) for e in self.devfile.read(8)]
+        # python3
         return self.devfile.read(8)
     
+    # read data and decrypt it to human-readable values
     def read(self):
         self.connect() # connect first
 
-        # Key retrieved from /dev/random, guaranteed to be random ;)
-        key = [0xc4, 0xc6, 0xc0, 0x92, 0x40, 0x23, 0xdc, 0x96]
-        
-        HIDIOCSFEATURE_9 = 0xC0094806
-        #set_report = "\x00" + "".join(chr(e) for e in key)
-        set_report = bytearray(b'\x00') + bytearray(key)
-        print("set_report: {}".format(set_report))
-        fcntl.ioctl(self.devfile, HIDIOCSFEATURE_9, set_report)
-        
+        self.request() # request data
+
         values = {} # empty dictionary for measured values
         measure    = {'co2':None,'temperature':None} # wanted current values
 
@@ -117,30 +146,30 @@ class co2device(object):
                 return False # stop measuring and return
             
         # decrypt the read data
-        decrypted = self.decrypt(key, data)
+        decrypted = self.decrypt(self.key, data)
     
         # check data integrity
-        #if decrypted[4] != 0x0d or \
-            #(sum(decrypted[:3]) & 0xff) != decrypted[3]:
-        if False:
-            # there is some data integrity problem
-            logger.error("{crypt} => {decrypt}".format(
-                crypt=self.hd(data),decrypt=self.hd(decrypted)))
-            logger.error(" ".join(["Checksum error","(never mind if {}",
-                "is the correct co2monitor device node...)"]).format(
-                self.device))
+        if not self.check_integrity(data,decrypted): # checksum error
+            pass # never mind...
         else: # data is okay
             op = decrypted[0]
             val = decrypted[1] << 8 | decrypted[2]
             values[op] = val
-            print(values)
             
             #  From http://co2meters.com/Documentation/AppNotes/
             #  AN146-RAD-0401-serial-communication.pdf
-            if 0x50 in values or 0x42 in values:
-    	        if 0x50 in values:
-    	            measure['co2'] = values[0x50]
-    	        if 0x42 in values:
-    	            measure['temperature'] = round((values[0x42]/16.0-273.15),1)
+
+            # co2 concentration
+            if 0x50 in values:
+                measure['co2'] = values[0x50]
+                self.last_co2 = measure['co2']
+            else:
+                measure['co2'] = self.last_co2
+            # temperature
+            if 0x42 in values:
+                measure['temperature'] = round((values[0x42]/16.0-273.15),1)
+                self.last_temp = measure['temperature']
+            else:
+                measure['temperature'] = self.last_temp
     
         return measure
