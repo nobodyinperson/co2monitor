@@ -89,3 +89,7 @@ ENV/
 
 # debian packaging
 debian/co2monitor
+debian/*.substvars
+debian/*.log
+debian/*-build-stamp
+debian/files

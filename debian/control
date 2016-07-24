@@ -10,7 +10,7 @@ Architecture: all
 Depends: ${misc:Depends}, python3
 Conflicts: co2monitor
 Replaces: co2monitor
-Description: Monitor data from USB CO2 measurement devices.
+Description: monitor data from USB co2 measurement devices
  Hendryk reverse-engineered the protocol of some CO2 measurement
- devices sold under various names. This is an extended python
+ devices sold under various names. This is an extended Python
  implementation that provides convenient functionality.
