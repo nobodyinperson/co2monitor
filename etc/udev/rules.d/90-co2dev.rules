@@ -1,0 +1,5 @@
+ACTION=="remove", GOTO="co2dev_end"
+
+SUBSYSTEMS=="usb", KERNEL=="hidraw*", ATTRS{idVendor}=="04d9", ATTRS{idProduct}=="a052", GROUP="plugdev", MODE="0660", SYMLINK+="co2dev%n", RUN+="/bin/sh -c 'setsid /usr/lib/co2monitor/co2monitor-service'", GOTO="co2dev_end"
+
+LABEL="co2dev_end"
