@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 import logging
+import sys, os
 
 logging.basicConfig(filename='/tmp/co2monitor',level=logging.DEBUG,format='%(asctime)s %(message)s')
-logging.debug("Here is the co2monitor!!")
+logging.debug("co2monitor started")
+logging.debug("co2monitor device {} detected".format(os.environ["DEVNAME"]))
