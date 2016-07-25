@@ -2,6 +2,8 @@
 import logging
 import configparser
 import sys, os, glob
+import csv
+import time
 
 # add /usr/lib/co2monitor to the module paths
 sys.path.insert(1,os.path.join(os.path.dirname(os.path.realpath(__file__)),
@@ -18,11 +20,21 @@ logger = logging.getLogger(__name__)
 ##########################
 class co2monitorService(object):
     def __init__(self):
+        # set up configi
+        self.config_setup()
+
+        # set up logging
+        self.logging_setup()
+
+    # set up config
+    def config_setup(self):
         # read config
         configfiles = glob.glob("/etc/co2monitor/*")
         self.config = configparser.ConfigParser()
         self.config.read(configfiles)
 
+    # set up logging according to config
+    def logging_setup(self):
         # initialize logging
         # set loglevel possiblities
         loglevels = {
@@ -54,6 +66,43 @@ class co2monitorService(object):
     def setup_device(self, device):
         self.device = co2device.co2device(device)
 
+    # loop 
+    def logloop(self):
+        datafolder = self.config.get('data-logging','datafolder')
+        fieldnames = ['time','temperature','co2']
+        datafile   = "{folder}/co2monitor-{time}.csv".format(
+            time = time.strftime("%Y%m%d%H%M%S",time.localtime()),
+            folder = datafolder
+            )
+
+        with open(datafile, 'w') as csvfile: # open file
+            logger.info("opened {} for data logging.".format(datafile))
+            writer = csv.DictWriter(csvfile, fieldnames = fieldnames)
+
+            writer.writeheader()
+            measold = {}
+            while True: # read as long as you can
+                meas = self.device.read() # read from device
+                # set time
+                meas['time'] = time.strftime("%Y-%m-%d %H:%M:%S",
+                                             time.localtime())
+
+                # check if this measurement introduces something new
+                if meas.get('temperature',None)    != \
+                   measold.get('temperature',None) or \
+                   meas.get('co2',None) != measold.get('co2',None):
+                    # measurement is not only None
+                    if not meas.get('temperature',None) is None or \
+                       not meas.get('co2',None) is None:
+                        writer.writerow(meas) # write
+                        csvfile.flush() # writeout
+
+                
+                # update old measurements
+                measold.update(meas)
+
+                
+
 
 
 ### main program ###
@@ -70,5 +119,6 @@ if __name__ == "__main__":
     else:
         service.setup_device(device)
 
-    while True:
-        logger.info(service.device.read())
+    # start the logloop
+    service.logloop()
+

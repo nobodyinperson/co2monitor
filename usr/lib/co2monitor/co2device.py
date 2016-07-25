@@ -129,7 +129,7 @@ class co2device(object):
 
         # read data from co2monitor ( this takes a couple of seconds )
         try:
-            logger.debug("reading from device '{}'".format(self.device))
+            #logger.debug("reading from device '{}'".format(self.device))
             data = self.read_raw()
         except IOError:
             logger.error("Could not read from device '{}'".format(self.device))
@@ -171,5 +171,10 @@ class co2device(object):
                 self.last_temp = measure['temperature']
             else:
                 measure['temperature'] = self.last_temp
+
+        # rudimentary check
+        if not measure['co2'] is None:
+            if measure['co2'] > 5000:
+                measure['co2'] = None
     
         return measure
