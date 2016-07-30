@@ -20,7 +20,7 @@ logger = logging.getLogger(__name__)
 ##########################
 class co2monitorService(object):
     def __init__(self):
-        # set up configi
+        # set up config
         self.config_setup()
 
         # set up logging
@@ -83,23 +83,27 @@ class co2monitorService(object):
             measold = {}
             while True: # read as long as you can
                 meas = self.device.read() # read from device
-                # set time
-                meas['time'] = time.strftime("%Y-%m-%d %H:%M:%S",
-                                             time.localtime())
 
-                # check if this measurement introduces something new
-                if meas.get('temperature',None)    != \
-                   measold.get('temperature',None) or \
-                   meas.get('co2',None) != measold.get('co2',None):
-                    # measurement is not only None
-                    if not meas.get('temperature',None) is None or \
-                       not meas.get('co2',None) is None:
-                        writer.writerow(meas) # write
-                        csvfile.flush() # writeout
-
-                
-                # update old measurements
-                measold.update(meas)
+                if isinstance(meas, dict): # measurement worked
+                    # set time
+                    meas['time'] = time.strftime("%Y-%m-%d %H:%M:%S",
+                                                 time.localtime())
+    
+                    # check if this measurement introduces something new
+                    if meas.get('temperature',None)    != \
+                       measold.get('temperature',None) or \
+                       meas.get('co2',None) != measold.get('co2',None):
+                        # measurement is not only None
+                        if not meas.get('temperature',None) is None or \
+                           not meas.get('co2',None) is None:
+                            writer.writerow(meas) # write
+                            csvfile.flush() # writeout
+    
+                    
+                    # update old measurements
+                    measold.update(meas)
+                else: # measurement didn't work
+                    sys.exit(2) # stop!
 
                 
 
