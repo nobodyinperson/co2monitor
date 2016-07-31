@@ -55,7 +55,7 @@ class co2monitorService(object):
         logging.basicConfig(
             filename=logfile, level=loglevel,
             format="%(asctime)s [%(levelname)s] %(module)s: %(message)s",
-            datefmt="%H:%M:%S"
+            datefmt="%Y-%m-%d %H:%M:%S"
             )
 
         # no logging wanted
@@ -74,6 +74,12 @@ class co2monitorService(object):
             time = time.strftime("%Y%m%d%H%M%S",time.localtime()),
             folder = datafolder
             )
+
+        # warmup
+        warmuptime = self.config.getint('data-logging','warmuptime')
+        logger.info("giving the device {} seconds of warmup time...".format(
+            warmuptime))
+        time.sleep(warmuptime) # sleep...
 
         with open(datafile, 'w') as csvfile: # open file
             logger.info("opened {} for data logging.".format(datafile))
