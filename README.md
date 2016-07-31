@@ -1,7 +1,7 @@
 # co2monitor
 Python access to the TFA-Dostmann AirCO2ntrol USB co2 measurement device
 
-**Note**: This application is in development state and currently not really functional.
+**Note**: This application is in development state.
 
 ## Debian package
 
