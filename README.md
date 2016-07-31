@@ -5,7 +5,7 @@ Python access to the TFA-Dostmann AirCO2ntrol USB co2 measurement device
 
 ## Debian package
 
-To build a debian package, run ```dpkg-buildpackage``` from the repository root.
+To build a debian package, run ```dpkg-buildpackage -us -uc``` (options mean without signing) from the repository root.
 There will be a ```co2monitor_*.deb``` one folder layer above.
 
 You may then install it via ```sudo dpkg -i co2monitor_*.deb```.
