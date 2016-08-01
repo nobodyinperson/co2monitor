@@ -1,0 +1,12 @@
+[Unit]
+Description=co2monitor - log data from specific usb co2 devices
+Requires=systemd-udevd.service
+
+[Service]
+Type=simple
+RemainAfterExit=no
+ExecStart=/usr/lib/co2monitor/co2monitor-service
+ExecStop=killall co2monitor-service
+
+[Install]
+WantedBy=multi-user.target

@@ -69,6 +69,10 @@ class co2monitorService(object):
     # loop 
     def logloop(self):
         datafolder = self.config.get('data-logging','datafolder')
+
+        if not os.path.isfolder(): # check if data folder does not exist
+            os.makedirs(datafolder,0755) # create data folder
+        
         fieldnames = ['time','temperature','co2']
         datafile   = "{folder}/co2monitor-{time}.csv".format(
             time = time.strftime("%Y%m%d%H%M%S",time.localtime()),

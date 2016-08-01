@@ -1,4 +1,13 @@
 #!/usr/bin/make -f
+# taken from https://github.com/Ubuntu-Solutions-Engineering/openstack-deb
 
 %:
-	dh $@
+	dh $@ --with=systemd
+
+override_dh_installinit:
+	dh_systemd_enable -pco2monitor --name=co2monitor co2monitor.service
+	dh_installinit -pco2monitor --no-start --noscripts
+	dh_systemd_start -pco2monitor --no-restart-on-upgrade
+
+override_dh_systemd_start:
+	echo "Not running dh_systemd_start"
