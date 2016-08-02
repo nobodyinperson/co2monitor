@@ -70,7 +70,7 @@ class co2monitorService(object):
     def logloop(self):
         datafolder = self.config.get('data-logging','datafolder')
 
-        if not os.path.isfolder(): # check if data folder does not exist
+        if not os.path.isdir(datafolder): # check if data folder does not exist
             os.makedirs(datafolder,0o755) # create data folder
         
         fieldnames = ['time','temperature','co2']
