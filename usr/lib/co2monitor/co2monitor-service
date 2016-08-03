@@ -4,6 +4,7 @@ import configparser
 import sys, os, glob
 import csv
 import time
+import signal
 
 # add /usr/lib/co2monitor to the module paths
 sys.path.insert(1,os.path.join(os.path.dirname(os.path.realpath(__file__)),
@@ -20,11 +21,22 @@ logger = logging.getLogger(__name__)
 ##########################
 class co2monitorService(object):
     def __init__(self):
+        # handle SIGINT and SIGTERM
+        self.kill_now = False
+        signal.signal(signal.SIGINT, self.please_stop_now)
+        signal.signal(signal.SIGTERM, self.please_stop_now)
+
         # set up config
         self.config_setup()
 
         # set up logging
         self.logging_setup()
+
+    # kindly stop logging
+    def please_stop_now(self, signum=None, frame=None):
+        logger.info(" ".join(["received stop signal {},",
+            "will stop logging after current measurement."]).format(signum))
+        self.kill_now = True
 
     # set up config
     def config_setup(self):
@@ -91,7 +103,7 @@ class co2monitorService(object):
 
             writer.writeheader()
             measold = {}
-            while True: # read as long as you can
+            while not self.kill_now: # read as long as you are allowed
                 meas = self.device.read() # read from device
 
                 if isinstance(meas, dict): # measurement worked
@@ -115,8 +127,9 @@ class co2monitorService(object):
                 else: # measurement didn't work
                     sys.exit(2) # stop!
 
-                
-
+            # logging ended
+            logger.info("stopped logging.")
+        logger.debug("closed data logging file '{}'".format(datafile))
 
 
 ### main program ###
