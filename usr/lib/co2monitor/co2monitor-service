@@ -124,14 +124,15 @@ if __name__ == "__main__":
     # run the service
     service = co2monitorService()
     logger.info("co2monitor started!")
+    logger.debug("command-line arguments: {}".format(sys.argv[1:]))
 
     # the device file
-    device = os.environ.get('DEVNAME', None)
-    if device is None:
-        logger.critical('No DEVNAME environment variable. Aborting.')
+    try: # first argument is the device file
+        device = sys.argv[1]
+        service.setup_device(device) # setup the device
+    except: # no device as argument
+        logger.critical('No device given as command-line argument. Aborting.')
         sys.exit(1)
-    else:
-        service.setup_device(device)
 
     # start the logloop
     service.logloop()

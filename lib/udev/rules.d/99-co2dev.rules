@@ -1,4 +1,3 @@
-SUBSYSTEM!="usb", GOTO="co2dev_end"
 ACTION!="add", GOTO="co2dev_end"
 
     SUBSYSTEMS=="usb", \
@@ -9,7 +8,7 @@ ACTION!="add", GOTO="co2dev_end"
     MODE="0660", \
     SYMLINK+="co2dev%n", \
     TAG+="systemd", \
-    PROGRAM="/usr/bin/systemd-escape -p --template=co2monitor@.service $env{DEVNAME}", \
+    PROGRAM="/bin/systemd-escape -p --template=co2monitor@.service $env{DEVNAME}", \
     ENV{SYSTEMD_WANTS}+="%c", \
     GOTO="co2dev_end"
 
