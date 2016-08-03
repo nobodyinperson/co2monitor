@@ -129,6 +129,7 @@ if __name__ == "__main__":
     # the device file
     try: # first argument is the device file
         device = sys.argv[1]
+        logger.info("setting up device '{}'".format(device))
         service.setup_device(device) # setup the device
     except: # no device as argument
         logger.critical('No device given as command-line argument. Aborting.')
