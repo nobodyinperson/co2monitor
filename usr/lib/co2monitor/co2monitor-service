@@ -35,7 +35,7 @@ class co2monitorService(object):
     # kindly stop logging
     def please_stop_now(self, signum=None, frame=None):
         logger.info(" ".join(["received stop signal {},",
-            "will stop logging after current measurement."]).format(signum))
+            "will terminate soon..."]).format(signum))
         self.kill_now = True
 
     # set up config
@@ -95,7 +95,9 @@ class co2monitorService(object):
         warmuptime = self.config.getint('data-logging','warmuptime')
         logger.info("giving the device {} seconds of warmup time...".format(
             warmuptime))
-        time.sleep(warmuptime) # sleep...
+        for i in range(warmuptime): # Loop over each sleep second
+            if self.kill_now: break # stop if asked to stop
+            time.sleep(1) # sleep one second
 
         with open(datafile, 'w') as csvfile: # open file
             logger.info("opened {} for data logging.".format(datafile))
@@ -125,7 +127,8 @@ class co2monitorService(object):
                     # update old measurements
                     measold.update(meas)
                 else: # measurement didn't work
-                    sys.exit(2) # stop!
+                    break # exit logloop
+                    #sys.exit(2) # stop!
 
             # logging ended
             logger.info("stopped logging.")
