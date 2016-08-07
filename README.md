@@ -35,3 +35,7 @@ The folder structure (```etc```,```lib```,```usr```,```var```) is based on the [
 | ```usr/bin/co2monitor-applet``` | the co2monitor applet executable (currently unfunctional) |
 | ```var/lib/co2monitor/data/*``` | standard folder for logged co2 data |
 
+## Special thanks
+
+- Hendryk Plötz on [hackaday.io](https://hackaday.io/project/5301-reverse-engineering-a-low-cost-usb-co-monitor) for the device interaction
+- Mike Kazantsev on his blog on [fraggod.net](http://blog.fraggod.net/2012/06/16/proper-ish-way-to-start-long-running-systemd-service-on-udev-event-device-hotplug.html) for the systemd integration
