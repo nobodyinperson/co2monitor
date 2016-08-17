@@ -15,6 +15,8 @@ That's what **co2monitor** is.
 
 There are ready-to-use debian packages on the [releases page](https://github.com/nobodyinperson/co2monitor/releases), you may download the [latest release](https://github.com/nobodyinperson/co2monitor/releases/latest) there.
 
+For automatic updates, you may use my [apt repository](http://apt.nobodyinperson.de).
+
 To build a debian package from the repository, run ```dpkg-buildpackage -us -uc``` (options mean without signing) from the repository root.
 There will be a ```co2monitor_*.deb``` one folder layer above.
 
