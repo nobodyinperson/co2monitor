@@ -2,6 +2,7 @@ co2monitor (0.0.4) UNRELEASED; urgency=medium
 
   * better kill signal management
   * suggest r-base for plotting at installation
+  * added example plotting R script to /usr/share/doc/co2monitor/examples
 
  -- Yann Büchau <yann.buechau@web.de>  Thu, 04 Aug 2016 10:20:36 +0200
 
