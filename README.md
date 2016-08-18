@@ -25,6 +25,8 @@ There will be a ```co2monitor_*.deb``` one folder layer above.
 Install the debian package via ```sudo dpkg -i co2monitor_*.deb```.
 Older versions of **co2monitor** will automatically be removed.
 
+If you use my [apt repository](http://apt.nobodyinperson.de), install **co2monitor** like any other package via ```sudo apt-get update && sudo apt-get install co2monitor```
+
 Remove **co2monitor** from your system via ```sudo apt-get remove co2monitor```.
 
 ## Folder structure
