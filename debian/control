@@ -11,6 +11,7 @@ Vcs-Git: https://github.com/nobodyinperson/co2monitor.git
 Package: co2monitor
 Architecture: all
 Depends: ${misc:Depends}, python3
+Suggests: r-base
 Conflicts: co2monitor
 Replaces: co2monitor
 Description: monitor data from USB co2 measurement devices
