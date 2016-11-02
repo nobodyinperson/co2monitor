@@ -1,4 +1,4 @@
-co2monitor (0.0.4) UNRELEASED; urgency=medium
+co2monitor (0.0.4) unstable; urgency=medium
 
   * better kill signal management
   * suggest r-base for plotting at installation
