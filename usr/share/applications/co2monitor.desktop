@@ -1,0 +1,11 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=co2monitor
+Comment[de]=letzte CO2-Messreihe anzeigen
+Comment[en]=monitor most current co2 time series
+Exec=/usr/share/doc/co2monitor/examples/plot.R newest
+Icon=xfce4-cpugraph-plugin
+Path=
+Terminal=false
+StartupNotify=False
