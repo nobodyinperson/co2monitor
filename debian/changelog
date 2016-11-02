@@ -1,4 +1,4 @@
-co2monitor (0.0.5) UNRELEASED; urgency=medium
+co2monitor (0.0.5) unstable; urgency=medium
 
   * plotting script is now auto-refreshing
   * added plotting script to application menu
