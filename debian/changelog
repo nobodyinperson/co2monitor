@@ -1,3 +1,9 @@
+co2monitor (0.0.6) unstable; urgency=medium
+
+  * add own application icon
+
+ -- Yann Büchau <yann.buechau@web.de>  Thu, 03 Nov 2016 21:54:10 +0100
+
 co2monitor (0.0.5) unstable; urgency=medium
 
   * plotting script is now auto-refreshing
