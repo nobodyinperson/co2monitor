@@ -4,12 +4,6 @@ cat("Hint: select either 'all' or only the 'newest' file via command line argume
 
 DATADIR <- "/var/lib/co2monitor/data"
 
-ALLFILES <- Sys.glob(paste(DATADIR,"*.csv",sep="/"))
-if(length(ALLFILES)<1) {
-    stop(paste("no csv files in ",DATADIR))
-    }
-NEWESTFILE <- rev(ALLFILES)[1]
-
 # read args
 ARGS <- commandArgs(trailingOnly=TRUE)
 ALL<-FALSE # default: plot only newest file
@@ -40,6 +34,12 @@ X11()
 while(TRUE) {
     print(dev.list())
     # read data
+    ALLFILES <- Sys.glob(paste(DATADIR,"*.csv",sep="/"))
+    if(length(ALLFILES)<1) {
+        stop(paste("no csv files in ",DATADIR))
+        }
+    NEWESTFILE <- rev(ALLFILES)[1]
+
     if(ALL) { # read all files
         data <- as.data.frame(NULL)
         for(file in ALLFILES){
