@@ -6,4 +6,4 @@ After=%i.device
 [Service]
 Type=simple
 RemainAfterExit=no
-ExecStart=/usr/lib/co2monitor/co2monitor-service %I
+ExecStart=/usr/bin/co2monitor-service %I

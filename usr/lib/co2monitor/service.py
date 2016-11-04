@@ -6,12 +6,7 @@ import csv
 import time
 import signal
 
-# add /usr/lib/co2monitor to the module paths
-sys.path.insert(1,os.path.join(os.path.dirname(os.path.realpath(__file__)),
-    '/usr/lib/co2monitor'))
-
-# import co2 device interface
-import co2device
+from . import device
 
 # logger
 logger = logging.getLogger(__name__)
@@ -75,8 +70,8 @@ class co2monitorService(object):
             logger.propagate = False # switch off logging
             
     # set up the device
-    def setup_device(self, device):
-        self.device = co2device.co2device(device)
+    def setup_device(self, devicefile):
+        self.device = device.co2device(devicefile)
 
     # loop 
     def logloop(self):
@@ -133,24 +128,4 @@ class co2monitorService(object):
             # logging ended
             logger.info("stopped logging.")
         logger.debug("closed data logging file '{}'".format(datafile))
-
-
-### main program ###
-if __name__ == "__main__":
-    # run the service
-    service = co2monitorService()
-    logger.info("co2monitor started!")
-    logger.debug("command-line arguments: {}".format(sys.argv[1:]))
-
-    # the device file
-    try: # first argument is the device file
-        device = sys.argv[1]
-        logger.info("setting up device '{}'".format(device))
-        service.setup_device(device) # setup the device
-    except: # no device as argument
-        logger.critical('No device given as command-line argument. Aborting.')
-        sys.exit(1)
-
-    # start the logloop
-    service.logloop()
 
