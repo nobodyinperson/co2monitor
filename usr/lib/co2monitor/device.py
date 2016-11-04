@@ -7,6 +7,20 @@ import fcntl, time, signal
 # logger
 logger = logging.getLogger(__name__)
 
+# get user system language
+user_language = os.environ.get('LANGUAGE')
+try: # try to use gettext for translations
+    import gettext # translations
+    # init translation
+    lang = gettext.translation(
+        'co2monitor', # domain
+        localedir='/usr/share/co2monitor/lang', # language folder
+        languages=[user_language.split("_")[0]]
+        )
+    lang.install() # install the language
+except: # use the strings from here
+    _ = lambda s:s
+
 #############################
 ### class for co2 devices ###
 #############################
@@ -27,7 +41,7 @@ class co2device(object):
     def device(self, device):
         try: 
             if not os.path.exists(device):
-                raise TypeError("Device file '{}' does not exist.".format(
+                raise TypeError(_("Device file '{}' does not exist.").format(
                     device))
         except: raise
         # set the new device file
@@ -77,8 +91,8 @@ class co2device(object):
             # there is some data integrity problem
             logger.error("{crypt} => {decrypt}".format(
                 crypt=self.hd(data),decrypt=self.hd(decrypted)))
-            logger.error(" ".join(["Checksum error","(never mind if {}",
-                "is the correct co2monitor device node...)"]).format(
+            logger.error(" ".join([_("Checksum error"),_("(never mind if {}"),
+                _("is the correct co2monitor device node...)")]).format(
                 self.device))
             return False
         else:
@@ -90,15 +104,19 @@ class co2device(object):
             try: # if file is closed or was never opened yet...
                 if self.devfile.closed: raise Exception
             except: # open it!
-                logger.info("opening co2 device file '{}'".format(self.device))
+                logger.info(_("opening co2 device file '{}'").format(self.device))
                 self.devfile = open(self.device, "a+b",  0) # Open device node
         else: # device does not exist
-            raise OSError("device '{}' does not exist.".format(self.device))
+            raise OSError(_("device '{}' does not exist.").format(self.device))
     
     # disconnect from co2 device
     def disconnect(self):
-        logger.info("closing co2 device file '{}'".format(self.device))
+        logger.info(_("closing co2 device file '{}'").format(self.device))
         self.devfile.close()
+
+    # get approx seconds the device is plugged in
+    def uptime(self):
+        return time.time() - os.path.getctime(self.device)
 
     # request data from device (do not read!)
     def request(self):
@@ -129,11 +147,11 @@ class co2device(object):
 
         # read data from co2monitor ( this takes a couple of seconds )
         try:
-            #logger.debug("reading from device '{}'".format(self.device))
+            #logger.debug(_("reading from device '{}'").format(self.device))
             data = self.read_raw()
         except IOError:
-            logger.error("Could not read from device '{}'".format(self.device))
-            logger.info("Trying to reconnect...")
+            logger.error(_("Could not read from device '{}'").format(self.device))
+            logger.info(_("Trying to reconnect..."))
             # disconnect first
             try: self.disconnect()
             except: pass
@@ -142,7 +160,7 @@ class co2device(object):
                 self.connect()
                 data = self.read_raw()
             except:
-                logger.critical("Could not reconnect. Aborting.")
+                logger.critical(_("Could not reconnect. Aborting."))
                 return False # stop measuring and return
             
         # decrypt the read data

@@ -1,0 +1,99 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR ORGANIZATION
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-11-04 23:12+0100\n"
+"PO-Revision-Date: 2016-11-04 23:35+0100\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: de\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: pygettext.py 1.5\n"
+"X-Generator: Poedit 1.8.7.1\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: usr/bin/co2monitor-service:36
+msgid "co2monitor started!"
+msgstr "co2monitor wurde gestartet!"
+
+#: usr/bin/co2monitor-service:37
+msgid "command-line arguments: {}"
+msgstr "Kommandozeilenargumente: {}"
+
+#: usr/bin/co2monitor-service:42
+msgid "setting up device '{}'"
+msgstr "Konfiguriere Gerät '{}'"
+
+#: usr/lib/co2monitor/device.py:45
+msgid "Device file '{}' does not exist."
+msgstr "Gerätedatei '{}' existiert nicht."
+
+#: usr/lib/co2monitor/device.py:95
+msgid "Checksum error"
+msgstr "Prüfsummenfehler"
+
+#: usr/lib/co2monitor/device.py:95
+msgid "(never mind if {}"
+msgstr "(egal, wenn '{}'"
+
+#: usr/lib/co2monitor/device.py:96
+msgid "is the correct co2monitor device node...)"
+msgstr "die korrekte co2monitor Gerätedatei ist...)"
+
+#: usr/lib/co2monitor/device.py:108
+msgid "opening co2 device file '{}'"
+msgstr "öffne co2-Gerätedatei '{}'"
+
+#: usr/lib/co2monitor/device.py:111
+msgid "device '{}' does not exist."
+msgstr "Gerätedatei '{}' existiert nicht."
+
+#: usr/lib/co2monitor/device.py:115
+msgid "closing co2 device file '{}'"
+msgstr "schließe co2-Gerätedatei '{}'"
+
+#: usr/lib/co2monitor/device.py:154
+msgid "Could not read from device '{}'"
+msgstr "Konnte nicht von Gerätedatei '{}' lesen"
+
+#: usr/lib/co2monitor/device.py:155
+msgid "Trying to reconnect..."
+msgstr "Versucht Neuverbindung..."
+
+#: usr/lib/co2monitor/device.py:164
+msgid "Could not reconnect. Aborting."
+msgstr "Konnte nicht wiederverbinden. Abbruch."
+
+#: usr/lib/co2monitor/gui.py:15
+msgid "Welcome to Co2monitor!"
+msgstr "Willkommen bei Co2monitor!"
+
+#: usr/lib/co2monitor/service.py:46
+msgid "received stop signal {},"
+msgstr "Anhaltesignal {} erhalten,"
+
+#: usr/lib/co2monitor/service.py:47
+msgid "will terminate soon..."
+msgstr "werde bald anhalten..."
+
+#: usr/lib/co2monitor/service.py:108
+msgid "giving the device another {} seconds of warmup time..."
+msgstr "warte noch {} Sekunden, bis das Gerät bereit ist..."
+
+#: usr/lib/co2monitor/service.py:115
+msgid "opened {} for data logging."
+msgstr "Datei {} zur Datenaufzeichnung geöffnet."
+
+#: usr/lib/co2monitor/service.py:146
+msgid "stopped logging."
+msgstr "Datenaufzeichnung beendet."
+
+#: usr/lib/co2monitor/service.py:147
+msgid "closed data logging file '{}'"
+msgstr "Datenaufzeichnungsdatei '{}' geschlossen"

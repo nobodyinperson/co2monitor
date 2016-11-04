@@ -11,6 +11,20 @@ from . import device
 # logger
 logger = logging.getLogger(__name__)
 
+# get user system language
+user_language = os.environ.get('LANGUAGE')
+try: # try to use gettext for translations
+    import gettext # translations
+    # init translation
+    lang = gettext.translation(
+        'co2monitor', # domain
+        localedir='/usr/share/co2monitor/lang', # language folder
+        languages=[user_language.split("_")[0]]
+        )
+    lang.install() # install the language
+except: # use the strings from here
+    _ = lambda s:s
+
 ##########################
 ### monitoring service ###
 ##########################
@@ -29,8 +43,8 @@ class co2monitorService(object):
 
     # kindly stop logging
     def please_stop_now(self, signum=None, frame=None):
-        logger.info(" ".join(["received stop signal {},",
-            "will terminate soon..."]).format(signum))
+        logger.info(" ".join([_("received stop signal {},"),
+            _("will terminate soon...")]).format(signum))
         self.kill_now = True
 
     # set up config
@@ -88,14 +102,17 @@ class co2monitorService(object):
 
         # warmup
         warmuptime = self.config.getint('data-logging','warmuptime')
-        logger.info("giving the device {} seconds of warmup time...".format(
-            warmuptime))
-        for i in range(warmuptime): # Loop over each sleep second
-            if self.kill_now: break # stop if asked to stop
-            time.sleep(1) # sleep one second
+        waittime = round(max(0,warmuptime - self.device.uptime()))
+        if waittime > 0:
+            logger.info(
+                _("giving the device another {} seconds of warmup time...").format(
+                waittime))
+            for i in range(waittime): 
+                if self.kill_now: break # stop if asked to stop
+                time.sleep(1) # sleep one second
 
         with open(datafile, 'w') as csvfile: # open file
-            logger.info("opened {} for data logging.".format(datafile))
+            logger.info(_("opened {} for data logging.").format(datafile))
             writer = csv.DictWriter(csvfile, fieldnames = fieldnames)
 
             writer.writeheader()
@@ -126,6 +143,6 @@ class co2monitorService(object):
                     #sys.exit(2) # stop!
 
             # logging ended
-            logger.info("stopped logging.")
-        logger.debug("closed data logging file '{}'".format(datafile))
+            logger.info(_("stopped logging."))
+        logger.debug(_("closed data logging file '{}'").format(datafile))
 
