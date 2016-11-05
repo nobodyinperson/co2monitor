@@ -5,24 +5,8 @@ from gi.repository import Gtk
 import logging
 import os
 
-
 # logger
 logger = logging.getLogger(__name__)
-
-# get user system language
-user_language = os.environ.get('LANGUAGE')
-try: # try to use gettext for translations
-    import gettext # translations
-    # init translation
-    lang = gettext.translation(
-        'co2monitor', # domain
-        localedir='/usr/share/co2monitor/lang', # language folder
-        languages=[user_language.split("_")[0]]
-        )
-    lang.install() # install the language
-except: # use the strings from here
-    _ = lambda s:s
-
 
 class Co2MonitorWindow(Gtk.Window):
     def __init__(self):

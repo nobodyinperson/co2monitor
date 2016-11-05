@@ -5,6 +5,7 @@ import sys, os, glob
 import csv
 import time
 import signal
+import gettext
 
 # logger
 logger = logging.getLogger(__name__)
@@ -15,18 +16,15 @@ logger = logging.getLogger(__name__)
 sys.path.insert(1,"/usr/lib")
 
 # get user system language
-user_language = os.environ.get('LANGUAGE')
-try: # try to use gettext for translations
-    import gettext # translations
-    # init translation
-    lang = gettext.translation(
-        'co2monitor', # domain
-        localedir='/usr/share/co2monitor/lang', # language folder
-        languages=[user_language.split("_")[0]]
-        )
-    lang.install() # install the language
-except: # use the strings from here
-    _ = lambda s:s
+user_language = os.environ.get('LANGUAGE','##') # default to a non-existent lang
+# init translation
+lang = gettext.translation(
+    domain    = 'co2monitor',                  # domain
+    localedir = '/usr/share/co2monitor/lang',  # language folder
+    languages = [user_language.split("_")[0]], # user language
+    fallback  = True
+    )
+lang.install() # install the language
 
 # import co2 device interface
 import co2monitor.service
@@ -37,13 +35,13 @@ logger.info(_("co2monitor started!"))
 logger.debug(_("command-line arguments: {}").format(sys.argv[1:]))
 
 # the device file
-# try: # first argument is the device file
-device = sys.argv[1]
-logger.info(_("setting up device '{}'").format(device))
-service.setup_device(device) # setup the device
-# except: # no device as argument
-#     logger.critical('No device given as command-line argument. Aborting.')
-#     sys.exit(1)
+try: # first argument is the device file
+    device = sys.argv[1]
+    logger.info(_("setting up device '{}'").format(device))
+    service.setup_device(device) # setup the device
+except: # no device as argument
+    logger.critical('No device given as command-line argument. Aborting.')
+    sys.exit(1)
 
 # start the logloop
 service.logloop()
