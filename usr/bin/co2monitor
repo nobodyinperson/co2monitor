@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 import logging
-import sys, os
+import sys, os, glob
 import gettext
 
 # add /usr/lib to the module paths
@@ -25,5 +25,12 @@ lang.install() # install the language
 # import co2monitor
 import co2monitor.gui
 
-gui = co2monitor.gui.Co2MonitorWindow()
+gui = co2monitor.gui.Co2MonitorGui()
+# set up config
+gui.config_setup(glob.glob("/etc/co2monitor/*.conf"))
+# setup logging
+gui.logging_setup()
+# set up the gui
+gui.setup_gui()
+# run the gui
 gui.run()

@@ -21,12 +21,6 @@ class co2monitorService(object):
         signal.signal(signal.SIGINT, self.please_stop_now)
         signal.signal(signal.SIGTERM, self.please_stop_now)
 
-        # set up config
-        self.config_setup()
-
-        # set up logging
-        self.logging_setup()
-
     # kindly stop logging
     def please_stop_now(self, signum=None, frame=None):
         logger.info(" ".join([_("received stop signal {},"),
@@ -34,9 +28,8 @@ class co2monitorService(object):
         self.kill_now = True
 
     # set up config
-    def config_setup(self):
+    def config_setup(self, configfiles):
         # read config
-        configfiles = glob.glob("/etc/co2monitor/*")
         self.config = configparser.ConfigParser()
         self.config.read(configfiles)
 

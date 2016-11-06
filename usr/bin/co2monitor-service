@@ -31,6 +31,10 @@ import co2monitor.service
 
 # run the service
 service = co2monitor.service.co2monitorService()
+# set up config
+service.config_setup(glob.glob("/etc/co2monitor/*.conf"))
+# set up logging
+service.logging_setup()
 logger.info(_("co2monitor started!"))
 logger.debug(_("command-line arguments: {}").format(sys.argv[1:]))
 
