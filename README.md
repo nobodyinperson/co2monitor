@@ -38,9 +38,9 @@ The folder structure (```etc```,```lib```,```usr```,```var```) is based on the [
 ### important files
 |           file                 |                  purpose              |
 |--------------------------------|---------------------------------------|
-| ```etc/co2monitor/co2monitor.conf``` | co2monitor service configuration file |
-| ```usr/lib/co2monitor/co2monitor-service``` |  the co2monitor service executable |
-| ```usr/bin/co2monitor-applet``` | the co2monitor applet executable (currently unfunctional) |
+| ```etc/co2monitor/service.conf``` | co2monitor service configuration file |
+| ```usr/bin/co2monitor-service``` |  the co2monitor service executable |
+| ```usr/bin/co2monitor``` | the co2monitor application executable |
 | ```var/lib/co2monitor/data/*``` | standard folder for logged co2 data |
 
 ## Special thanks
