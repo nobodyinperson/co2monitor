@@ -2,9 +2,11 @@
 import gi
 gi.require_version('Gtk','3.0')
 from gi.repository import Gtk
+from gi.repository import GLib
 import logging
 import os
 import configparser
+import signal
 
 # logger
 logger = logging.getLogger(__name__)
@@ -71,12 +73,19 @@ class Co2MonitorGui():
 
     # run the gui
     def run(self):
-        logger.debug(_("Starting GTK main loop..."))
-        Gtk.main() # main loop
-        logger.debug(_("GTK main loop ended."))
+        # can't use Gtk.main() because of a bug that prevents proper SIGINT
+        # handling. use Glib.MainLoop() directly instead.
+        self.mainloop = GLib.MainLoop() # main loop
+        # signal.signal(signal.SIGINT, signal.SIG_DFL)
+        logger.debug(_("Starting GLib main loop..."))
+        try:
+            self.mainloop.run()
+        except KeyboardInterrupt:
+            self.quit()
+        logger.debug(_("GLib main loop ended."))
 
     # quit the gui
     def quit(self, *args):
         logger.debug(_("Received quitting signal."))
-        Gtk.main_quit()
+        self.mainloop.quit()
 
