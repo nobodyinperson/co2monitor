@@ -6,7 +6,7 @@ import gettext
 # add /usr/lib to the module paths
 # sys.path.insert(1,os.path.join(os.path.dirname(os.path.realpath(__file__)),
     # '../../usr/lib'))
-sys.path.insert(1,"/usr/lib")
+sys.path.insert(1,"/usr/lib/co2monitor/python")
 
 # logger
 logger = logging.getLogger(__name__)

@@ -33,35 +33,6 @@ class co2monitorService(object):
         self.config = configparser.ConfigParser()
         self.config.read(configfiles)
 
-    # set up logging according to config
-    def logging_setup(self):
-        # initialize logging
-        # set loglevel possiblities
-        loglevels = {
-            'debug'   :logging.DEBUG,
-            'info'    :logging.INFO,
-            'warning' :logging.WARNING,
-            'error'   :logging.ERROR,
-            'critical':logging.CRITICAL
-            }
-
-        # set up logging with loglevel from config
-        loglevel = loglevels.get(self.config.get('service-logging','loglevel'),
-                                 logging.WARNING)
-        logfile = self.config.get('service-logging','logfile')
-        if logfile is None: # if no logfile was specified
-            logfile = "/var/log/co2monitor.log"
-
-        logging.basicConfig(
-            filename=logfile, level=loglevel,
-            format="%(asctime)s [%(levelname)s] %(module)s: %(message)s",
-            datefmt="%Y-%m-%d %H:%M:%S"
-            )
-
-        # no logging wanted
-        if not self.config.getboolean('service-logging','logging'): 
-            logger.propagate = False # switch off logging
-            
     # set up the device
     def setup_device(self, devicefile):
         self.device = device.co2device(devicefile)
