@@ -4,6 +4,7 @@ co2monitor (0.0.7) UNRELEASED; urgency=medium
   * use gettext for i18n and l18n
   * add German translation
   * use Glade and Gtk.Builder for gui creation
+  * plug'n'play logging does now also work on non-systemd systems
 
  -- Yann Büchau <yann.buechau@web.de>  Fri, 04 Nov 2016 14:43:16 +0100
 

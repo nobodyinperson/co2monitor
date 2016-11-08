@@ -9,6 +9,7 @@ ACTION!="add", GOTO="co2dev_end"
     SYMLINK+="co2dev%n", \
     TAG+="systemd", \
     PROGRAM="/bin/systemd-escape -p --template=co2monitor@.service $env{DEVNAME}", \
+    RUN+="/bin/sh -c '/bin/echo /usr/lib/co2monitor/co2monitor-udev-start.sh | /usr/bin/at now'", \
     ENV{SYSTEMD_WANTS}+="%c", \
     GOTO="co2dev_end"
 
