@@ -22,6 +22,6 @@ SYSTEMD=$?
 if ! $(exit $SYSTEMD);then
     # start co2monitor by hand and detach it
     # "at now" idea taken from http://unix.stackexchange.com/a/243648
-    echo /usr/bin/co2monitor-service $DEVNAME udev | at now
+    echo /usr/bin/co2monitor-service $DEVNAME udev | /usr/bin/at now
     exit 0 # exit quickly before udev kills us!!!
 fi

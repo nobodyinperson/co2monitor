@@ -8,8 +8,8 @@ ACTION!="add", GOTO="co2dev_end"
     MODE="0660", \
     SYMLINK+="co2dev%n", \
     TAG+="systemd", \
-    PROGRAM="/bin/systemd-escape -p --template=co2monitor@.service $env{DEVNAME}", \
-    RUN+="/bin/sh -c '/bin/echo /usr/lib/co2monitor/co2monitor-udev-start.sh | /usr/bin/at now'", \
+    PROGRAM="/usr/lib/co2monitor/utils/systemd-escape-proxy.sh -p --template=co2monitor@.service $env{DEVNAME}", \
+    RUN+="/bin/sh -c '/bin/echo /usr/lib/co2monitor/utils/co2monitor-udev-start.sh | /usr/bin/at now'", \
     ENV{SYSTEMD_WANTS}+="%c", \
     GOTO="co2dev_end"
 
