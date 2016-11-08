@@ -1,9 +1,7 @@
 # co2monitor
 Automatic data logging for AirCO2ntrol mini USB co2 measurement devices.
 
-**Hint**: This application is compatible with Raspbian Jessie.
-
-**Hint**: The plug'n'play functionality relies on **systemd**. I'm working on a solution to let it work also on non-systemd systems.
+**Hint**: This application is compatible with Raspbian.
 
 **Note**: This application is in development state.
 
