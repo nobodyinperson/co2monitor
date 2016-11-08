@@ -1,4 +1,4 @@
-co2monitor (0.0.7) UNRELEASED; urgency=medium
+co2monitor (0.0.7) unstable; urgency=medium
 
   * better internal structure
   * use gettext for i18n and l18n
