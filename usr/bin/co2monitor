@@ -34,9 +34,12 @@ co2monitor.config.setup_logger_from_config(
 # import co2monitor
 import co2monitor.gui
 
+# a gui
 gui = co2monitor.gui.Co2MonitorGui()
-# set up config
-gui.config = config
+# set the config
+gui.set_config(config)
+# set the logger
+gui.set_logger(logger)
 # set up the gui
 gui.setup_gui()
 # run the gui

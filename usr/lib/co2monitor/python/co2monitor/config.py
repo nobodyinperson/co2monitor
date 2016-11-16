@@ -34,8 +34,12 @@ def setup_logger_from_config(logger,section,config=None):
         # get the configuration
         config = get_configuration()
 
+    # if this section is not in the config, leave the logger as is
+    try:    configsection = config[section]
+    except: return logger
+
     # no logging wanted
-    if not config.getboolean(section,'logging'): 
+    if not configsection.getboolean('logging'): 
         logger.propagate = False # switch off logging
         return logger
 
@@ -50,13 +54,13 @@ def setup_logger_from_config(logger,section,config=None):
     }
 
     # get loglevel from config
-    loglevel = loglevels.get(config.get(section,'loglevel').lower(),
+    loglevel = loglevels.get(configsection.get('loglevel','debug').lower(),
                          logging.WARNING)
     # get file from config
-    logfile = config.get(section,'logfile')
+    logfile = configsection.get('logfile', None)
 
     # create a handler
-    if os.path.exists(logfile):
+    if logfile:
         # create a file handler and log to that file
         handler = logging.FileHandler(filename = logfile)
     else:

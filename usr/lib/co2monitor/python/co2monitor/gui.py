@@ -22,37 +22,12 @@ class Co2MonitorGui():
         # load the gladefile
         self.builder.add_from_file(self.config.get('gui-general','gladefile'))
 
-    # set up config
-    def config_setup(self, configfiles):
-        # read config
-        self.config = configparser.ConfigParser()
-        self.config.read(configfiles)
+    # set the config
+    def set_config(self, config):
+        self.config = config
 
-    # set up logging according to config
-    def logging_setup(self):
-        # initialize logging
-        # set loglevel possiblities
-        loglevels = {
-            'debug'   :logging.DEBUG,
-            'info'    :logging.INFO,
-            'warning' :logging.WARNING,
-            'error'   :logging.ERROR,
-            'critical':logging.CRITICAL
-            }
-
-        # set up logging with loglevel from config
-        loglevel = loglevels.get(self.config.get('gui-logging','loglevel'),
-                                 logging.WARNING)
-
-        logging.basicConfig(
-            level=loglevel,
-            format="%(asctime)s [%(levelname)s] %(module)s: %(message)s",
-            datefmt="%Y-%m-%d %H:%M:%S"
-            )
-
-        # no logging wanted
-        if not self.config.getboolean('gui-logging','logging'): 
-            logger.propagate = False # switch off logging
+    def set_logger(self, logger):
+        self.logger = logger
 
     # set up the gui
     def setup_gui(self):
@@ -77,15 +52,15 @@ class Co2MonitorGui():
         # handling. use Glib.MainLoop() directly instead.
         self.mainloop = GLib.MainLoop() # main loop
         # signal.signal(signal.SIGINT, signal.SIG_DFL)
-        logger.debug(_("Starting GLib main loop..."))
+        self.logger.debug(_("Starting GLib main loop..."))
         try:
             self.mainloop.run()
         except KeyboardInterrupt:
             self.quit()
-        logger.debug(_("GLib main loop ended."))
+        self.logger.debug(_("GLib main loop ended."))
 
     # quit the gui
     def quit(self, *args):
-        logger.debug(_("Received quitting signal."))
+        self.logger.debug(_("Received quitting signal."))
         self.mainloop.quit()
 
