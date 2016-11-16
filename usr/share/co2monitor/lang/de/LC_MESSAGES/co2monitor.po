@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-06 22:40+0100\n"
-"PO-Revision-Date: 2016-11-06 22:41+0100\n"
+"POT-Creation-Date: 2016-11-16 14:06+0100\n"
+"PO-Revision-Date: 2016-11-16 14:09+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de\n"
@@ -18,94 +18,159 @@ msgstr ""
 "X-Generator: Poedit 1.8.7.1\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: usr/lib/co2monitor/device.py:31
-msgid "Device file '{}' does not exist."
-msgstr "Gerätedatei '{}' existiert nicht."
-
-#: usr/lib/co2monitor/device.py:81
-msgid "Checksum error"
-msgstr "Prüfsummenfehler"
-
-#: usr/lib/co2monitor/device.py:81
-msgid "(never mind if {}"
-msgstr "(egal, wenn '{}'"
-
-#: usr/lib/co2monitor/device.py:82
-msgid "is the correct co2monitor device node...)"
-msgstr "die korrekte co2monitor Gerätedatei ist...)"
-
-#: usr/lib/co2monitor/device.py:94
-msgid "opening co2 device file '{}'"
-msgstr "öffne co2-Gerätedatei '{}'"
-
-#: usr/lib/co2monitor/device.py:97
-msgid "device '{}' does not exist."
-msgstr "Gerätedatei '{}' existiert nicht."
-
-#: usr/lib/co2monitor/device.py:101
-msgid "closing co2 device file '{}'"
-msgstr "schließe co2-Gerätedatei '{}'"
-
-#: usr/lib/co2monitor/device.py:140
-msgid "Could not read from device '{}'"
-msgstr "Konnte nicht von Gerätedatei '{}' lesen"
-
-#: usr/lib/co2monitor/device.py:141
-msgid "Trying to reconnect..."
-msgstr "Versucht Neuverbindung..."
-
-#: usr/lib/co2monitor/device.py:150
-msgid "Could not reconnect. Aborting."
-msgstr "Konnte nicht wiederverbinden. Abbruch."
-
-#: usr/lib/co2monitor/gui.py:70
+#: usr/lib/co2monitor/python/co2monitor/gui.py:72
 msgid "Welcome to Co2monitor!"
 msgstr "Willkommen bei Co2monitor!"
 
-#: usr/lib/co2monitor/gui.py:74
-msgid "Starting GTK main loop..."
-msgstr "Starte GTK Hauptschleife..."
+#: usr/lib/co2monitor/python/co2monitor/gui.py:80
+msgid "Starting GLib main loop..."
+msgstr "Start GLib Hautpschleife..."
 
-#: usr/lib/co2monitor/gui.py:76
-msgid "GTK main loop ended."
-msgstr "GTK Hauptschleife beendet."
+#: usr/lib/co2monitor/python/co2monitor/gui.py:85
+msgid "GLib main loop ended."
+msgstr "GLib Hauptschleife beendet."
 
-#: usr/lib/co2monitor/gui.py:80
+#: usr/lib/co2monitor/python/co2monitor/gui.py:89
 msgid "Received quitting signal."
 msgstr "Anhaltesignal erhalten."
 
-#: usr/lib/co2monitor/service.py:26
+#: usr/lib/co2monitor/python/co2monitor/device.py:31
+msgid "Device file '{}' does not exist."
+msgstr "Gerätedatei '{}' existiert nicht."
+
+#: usr/lib/co2monitor/python/co2monitor/device.py:81
+msgid "Checksum error"
+msgstr "Prüfsummenfehler"
+
+#: usr/lib/co2monitor/python/co2monitor/device.py:81
+msgid "(never mind if {}"
+msgstr "(egal, wenn '{}'"
+
+#: usr/lib/co2monitor/python/co2monitor/device.py:82
+msgid "is the correct co2monitor device node...)"
+msgstr "die korrekte co2monitor Gerätedatei ist...)"
+
+#: usr/lib/co2monitor/python/co2monitor/device.py:94
+msgid "opening co2 device file '{}'"
+msgstr "öffne co2-Gerätedatei '{}'"
+
+#: usr/lib/co2monitor/python/co2monitor/device.py:97
+msgid "device '{}' does not exist."
+msgstr "Gerätedatei '{}' existiert nicht."
+
+#: usr/lib/co2monitor/python/co2monitor/device.py:101
+msgid "closing co2 device file '{}'"
+msgstr "schließe co2-Gerätedatei '{}'"
+
+#: usr/lib/co2monitor/python/co2monitor/device.py:140
+msgid "Could not read from device '{}'"
+msgstr "Konnte nicht von Gerätedatei '{}' lesen"
+
+#: usr/lib/co2monitor/python/co2monitor/device.py:141
+msgid "Trying to reconnect..."
+msgstr "Versuche Neuverbindung..."
+
+#: usr/lib/co2monitor/python/co2monitor/device.py:150
+msgid "Could not reconnect. Aborting."
+msgstr "Konnte nicht wiederverbinden. Abbruch."
+
+#: usr/lib/co2monitor/python/co2monitor/service.py:26
 msgid "received stop signal {},"
 msgstr "Anhaltesignal {} erhalten,"
 
-#: usr/lib/co2monitor/service.py:27
+#: usr/lib/co2monitor/python/co2monitor/service.py:27
 msgid "will terminate soon..."
 msgstr "werde bald anhalten..."
 
-#: usr/lib/co2monitor/service.py:87
+#: usr/lib/co2monitor/python/co2monitor/service.py:58
 msgid "giving the device another {} seconds of warmup time..."
 msgstr "warte noch {} Sekunden, bis das Gerät bereit ist..."
 
-#: usr/lib/co2monitor/service.py:94
+#: usr/lib/co2monitor/python/co2monitor/service.py:65
 msgid "opened {} for data logging."
 msgstr "Datei {} zur Datenaufzeichnung geöffnet."
 
-#: usr/lib/co2monitor/service.py:125
+#: usr/lib/co2monitor/python/co2monitor/service.py:96
 msgid "stopped logging."
 msgstr "Datenaufzeichnung beendet."
 
-#: usr/lib/co2monitor/service.py:126
+#: usr/lib/co2monitor/python/co2monitor/service.py:97
 msgid "closed data logging file '{}'"
 msgstr "Datenaufzeichnungsdatei '{}' geschlossen"
 
-#: usr/bin/co2monitor-service:38
-msgid "co2monitor started!"
-msgstr "co2monitor wurde gestartet!"
+#: usr/bin/co2monitor-service:53
+msgid "Service running..."
+msgstr "Service läuft..."
 
-#: usr/bin/co2monitor-service:39
+#: usr/bin/co2monitor-service:55
+msgid "Service stopped"
+msgstr "Service beended"
+
+#: usr/bin/co2monitor-service:61
+msgid "running"
+msgstr "aktiv"
+
+#: usr/bin/co2monitor-service:63
+msgid "stopped"
+msgstr "inaktiv"
+
+#: usr/bin/co2monitor-service:68
+msgid "stopping co2monitor..."
+msgstr "stoppe co2monitor..."
+
+#: usr/bin/co2monitor-service:70
+msgid "stopped co2monitor"
+msgstr "co2monitor angehalten"
+
+#: usr/bin/co2monitor-service-old:86
+msgid "co2monitor was started by {}"
+msgstr "co2monitor wurde von {} gestartet"
+
+#: usr/bin/co2monitor-service-old:89
+msgid "co2monitor was started by hand"
+msgstr "co2monitor wurde von Hand gestartet"
+
+#: usr/bin/co2monitor-service-old:91
 msgid "command-line arguments: {}"
 msgstr "Kommandozeilenargumente: {}"
 
-#: usr/bin/co2monitor-service:44
+#: usr/bin/co2monitor-service-old:99
 msgid "setting up device '{}'"
 msgstr "Konfiguriere Gerät '{}'"
+
+#: usr/bin/co2monitor-invoker:33
+msgid "co2monitor is running"
+msgstr "co2monitor läuft"
+
+#: usr/bin/co2monitor-invoker:35
+msgid "co2monitor is not running"
+msgstr "co2monitor läuft nicht"
+
+#: usr/bin/co2monitor-invoker:38
+msgid "trying to start co2monitor via systemd's dbus interface..."
+msgstr "versuche, co2monitor über das DBus Interface von systemd zu starten..."
+
+#: usr/bin/co2monitor-invoker:47
+msgid "started co2monitor via systemd's dbus interface."
+msgstr "co2monitor wurde über das DBus Interface von systemd gestartet."
+
+#: usr/bin/co2monitor-invoker:49
+msgid "starting co2monitor via systemd's dbus interface didn't work."
+msgstr "co2monitor über das DBus Interface von systemd zu starten, hat nicht funktioniert."
+
+#: usr/bin/co2monitor-invoker:52
+msgid "starting co2monitor via 'at now'..."
+msgstr "starte co2monitor über 'at now'"
+
+#: usr/bin/co2monitor-invoker:55
+msgid "co2monitor started via 'at now'."
+msgstr "co2monitor wurde über 'at now' gestartet."
+
+#~ msgid "Starting GTK main loop..."
+#~ msgstr "Starte GTK Hauptschleife..."
+
+#~ msgid "GTK main loop ended."
+#~ msgstr "GTK Hauptschleife beendet."
+
+#~ msgid "co2monitor started!"
+#~ msgstr "co2monitor wurde gestartet!"

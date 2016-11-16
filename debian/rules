@@ -5,7 +5,7 @@
 	dh $@ --with=systemd
 
 override_dh_installinit:
-	dh_systemd_enable -pco2monitor --name=co2monitor@ co2monitor@.service
+	dh_systemd_enable -pco2monitor --name=co2monitor co2monitor.service
 	dh_installinit -pco2monitor --no-start --noscripts
 	dh_systemd_start -pco2monitor --no-restart-on-upgrade --no-start
 

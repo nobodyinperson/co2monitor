@@ -3,33 +3,40 @@ import logging
 import sys, os, glob
 import gettext
 
-# add /usr/lib to the module paths
-# sys.path.insert(1,os.path.join(os.path.dirname(os.path.realpath(__file__)),
-    # '../../usr/lib'))
-sys.path.insert(1,"/usr/lib/co2monitor/python")
-
-# logger
 logger = logging.getLogger(__name__)
 
-# get user system language
-user_language = os.environ.get('LANGUAGE','##')
-# init translation
-lang = gettext.translation(
-    domain    = 'co2monitor',                  # domain
-    localedir = '/usr/share/co2monitor/lang',  # language folder
-    languages = [user_language.split("_")[0]], # user language
-    fallback  = True
+####################
+### LIBRARY PATH ###
+####################
+# add /usr/lib/co2monitor/python to the module paths
+sys.path.insert(1,"/usr/lib/co2monitor/python")
+import co2monitor.config
+
+################
+### LANGUAGE ###
+################
+co2monitor.config.install_language_globally()
+
+#####################
+### CONFIGURATION ###
+#####################
+config = co2monitor.config.get_configuration()
+
+###############
+### LOGGING ###
+###############
+co2monitor.config.setup_logger_from_config(
+    logger  = logger,
+    section = 'gui-logging',
+    config  = config
     )
-lang.install() # install the language
 
 # import co2monitor
 import co2monitor.gui
 
 gui = co2monitor.gui.Co2MonitorGui()
 # set up config
-gui.config_setup(glob.glob("/etc/co2monitor/*.conf"))
-# setup logging
-gui.logging_setup()
+gui.config = config
 # set up the gui
 gui.setup_gui()
 # run the gui
