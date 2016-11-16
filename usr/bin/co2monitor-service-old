@@ -1,0 +1,115 @@
+#!/usr/bin/env python3
+import logging
+import configparser
+import sys, os, glob
+import csv
+import time
+import signal
+import gettext
+
+####################
+### LIBRARY PATH ###
+####################
+# add /usr/lib/co2monitor to the module paths
+# sys.path.insert(1,os.path.join(os.path.dirname(os.path.realpath(__file__)),
+#     '../../usr/lib'))
+sys.path.insert(1,"/usr/lib/co2monitor/python")
+
+# import co2 device interface
+import co2monitor.service
+
+# logger
+logger = logging.getLogger(__name__)
+
+##############
+### DEVICE ###
+##############
+# the device file
+try: 
+    # first argument is the device file
+    device = sys.argv[1]
+except: # no device as argument
+    logger.critical('No device given as command-line argument. Aborting.')
+    sys.exit(1)
+
+################
+### LANGUAGE ###
+################
+# get user system language
+user_language = os.environ.get('LANGUAGE','##') # default to a non-existent lang
+# init translation
+lang = gettext.translation(
+    domain    = 'co2monitor',                  # domain
+    localedir = '/usr/share/co2monitor/lang',  # language folder
+    languages = [user_language.split("_")[0]], # user language
+    fallback  = True
+    )
+lang.install() # install the language
+
+###############
+### SERVICE ###
+###############
+# run the service
+service = co2monitor.service.co2monitorService()
+# set up config
+service.config_setup(glob.glob("/etc/co2monitor/*.conf"))
+
+
+#####################
+### LOGGING SETUP ###
+#####################
+# initialize logging
+# set loglevel possiblities
+loglevels = {
+'debug'   :logging.DEBUG,
+'info'    :logging.INFO,
+'warning' :logging.WARNING,
+'error'   :logging.ERROR,
+'critical':logging.CRITICAL
+}
+
+# set up logging with loglevel from config
+loglevel = loglevels.get(service.config.get('service-logging','loglevel'),
+                     logging.WARNING)
+logfile = service.config.get('service-logging','logfile')
+if logfile is None: # if no logfile was specified
+    logfile = "/var/log/co2monitor.log"
+
+
+# logging config
+logging.basicConfig(
+filename=logfile, level=loglevel,
+format="%(asctime)s [%(levelname)s] %(module)s [{}]: %(message)s".format(device),
+datefmt="%Y-%m-%d %H:%M:%S"
+)
+
+# no logging wanted
+if not service.config.getboolean('service-logging','logging'): 
+    logger.propagate = False # switch off logging
+    
+###############
+### INVOKER ###
+###############
+# second argument is 'invoker'
+try:    
+    startedby = sys.argv[2]
+    logger.info(_("co2monitor was started by {}").format(startedby))
+except: 
+    startedby = None
+    logger.info(_("co2monitor was started by hand").format(startedby))
+
+logger.debug(_("command-line arguments: {}").format(sys.argv[1:]))
+
+
+
+####################
+### DEVICE SETUP ###
+####################
+# set up the device
+logger.info(_("setting up device '{}'").format(device))
+service.setup_device(device) # setup the device
+
+
+# start the logloop
+service.logloop()
+

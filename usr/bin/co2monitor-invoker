@@ -1,0 +1,44 @@
+#!/usr/bin/env python3
+
+import dbus
+import logging
+from subprocess import Popen, PIPE
+
+logger = logging.getLogger(__name__)
+
+logging.basicConfig(level=logging.DEBUG)
+
+# define names
+CO2MONITOR_BUSNAME    = "de.nobodyinperson.co2monitor"
+CO2MONITOR_INTERFACE  = "de.nobodyinperson.co2monitor"
+CO2MONITOR_OBJECTPATH = "/de/nobodyinperson/co2monitor"
+
+systembus = dbus.SystemBus() # the session bus
+
+# check if the co2monitor service is already running
+if systembus.name_has_owner(CO2MONITOR_BUSNAME):
+    logger.info("co2monitor is running")
+else:
+    logger.info("co2monitor is not running")
+    
+    try: # try to start co2monitor via systemd
+        logger.info("trying to start co2monitor via systemd's dbus interface...")
+        # get systemd dbus object
+        systemd = systembus.get_object( "org.freedesktop.systemd1",
+                                       "/org/freedesktop/systemd1")
+        # get the Manager interface
+        systemd_manager  = dbus.Interface(systemd, 
+            dbus_interface="org.freedesktop.systemd1.Manager")
+        # let the manager start the co2monitor.service unit
+        systemd_manager.StartUnit("co2monitor.service","replace")
+        logger.info("started co2monitor via systemd's dbus interface.")
+    except: # systemd starting didn't work
+        logger.debug("starting co2monitor via systemd's dbus interface didn't work.")
+        # last resort: start co2monitor service by hand
+        # open "at now" process
+        logger.info("starting co2monitor via 'at now'...")
+        atnow = Popen(["at","now"],stdin=PIPE,stdout=PIPE,stderr=PIPE)
+        atnow.communicate(input = b'/usr/bin/co2monitor-service')
+        logger.info("co2monitor started via 'at now'.")
+
+    

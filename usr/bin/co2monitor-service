@@ -1,115 +1,65 @@
 #!/usr/bin/env python3
-import logging
-import configparser
-import sys, os, glob
-import csv
-import time
-import signal
-import gettext
 
-####################
-### LIBRARY PATH ###
-####################
-# add /usr/lib/co2monitor to the module paths
-# sys.path.insert(1,os.path.join(os.path.dirname(os.path.realpath(__file__)),
-#     '../../usr/lib'))
-sys.path.insert(1,"/usr/lib/co2monitor/python")
+import dbus
+import dbus.service
+import dbus.mainloop.glib
 
-# import co2 device interface
-import co2monitor.service
+import threading
 
-# logger
-logger = logging.getLogger(__name__)
+import gi
+from gi.repository import GObject
 
-##############
-### DEVICE ###
-##############
-# the device file
-try: 
-    # first argument is the device file
-    device = sys.argv[1]
-except: # no device as argument
-    logger.critical('No device given as command-line argument. Aborting.')
-    sys.exit(1)
+# define names
+CO2MONITOR_BUSNAME    = "de.nobodyinperson.co2monitor"
+CO2MONITOR_INTERFACE  = "de.nobodyinperson.co2monitor"
+CO2MONITOR_OBJECTPATH = "/de/nobodyinperson/co2monitor"
 
-################
-### LANGUAGE ###
-################
-# get user system language
-user_language = os.environ.get('LANGUAGE','##') # default to a non-existent lang
-# init translation
-lang = gettext.translation(
-    domain    = 'co2monitor',                  # domain
-    localedir = '/usr/share/co2monitor/lang',  # language folder
-    languages = [user_language.split("_")[0]], # user language
-    fallback  = True
-    )
-lang.install() # install the language
+# use glib as default mailoop for dbus
+dbus.mainloop.glib.DBusGMainLoop(set_as_default=True)
 
-###############
-### SERVICE ###
-###############
-# run the service
-service = co2monitor.service.co2monitorService()
-# set up config
-service.config_setup(glob.glob("/etc/co2monitor/*.conf"))
+class LogThread(threading.Thread):
+    def __init__(self, devicefile):
+        self.devicefile = devicefile
+
+    def run():
+        pass
+        
+
+class Service(dbus.service.Object):
+    def __init__(self):
+        self.loop = GObject.MainLoop() # create mainloop
+
+        systembus = dbus.SystemBus() # connect to sessionbus
+        systembus.request_name(CO2MONITOR_BUSNAME) # request the bus name
+        bus_name = dbus.service.BusName(CO2MONITOR_BUSNAME, systembus) # create bus name
+        # register the object on the bus name
+        dbus.service.Object.__init__(self, bus_name, CO2MONITOR_OBJECTPATH)
 
 
-#####################
-### LOGGING SETUP ###
-#####################
-# initialize logging
-# set loglevel possiblities
-loglevels = {
-'debug'   :logging.DEBUG,
-'info'    :logging.INFO,
-'warning' :logging.WARNING,
-'error'   :logging.ERROR,
-'critical':logging.CRITICAL
-}
-
-# set up logging with loglevel from config
-loglevel = loglevels.get(service.config.get('service-logging','loglevel'),
-                     logging.WARNING)
-logfile = service.config.get('service-logging','logfile')
-if logfile is None: # if no logfile was specified
-    logfile = "/var/log/co2monitor.log"
+    def run(self):
+        print("Service running...")
+        self.loop.run()
+        print("Service stopped")
 
 
-# logging config
-logging.basicConfig(
-filename=logfile, level=loglevel,
-format="%(asctime)s [%(levelname)s] %(module)s [{}]: %(message)s".format(device),
-datefmt="%Y-%m-%d %H:%M:%S"
-)
+    @dbus.service.method(CO2MONITOR_INTERFACE, in_signature='', out_signature='s')
+    def status(self):
+        if self.loop.is_running():
+            return("running")
+        else:
+            return("stopped")
+            
 
-# no logging wanted
-if not service.config.getboolean('service-logging','logging'): 
-    logger.propagate = False # switch off logging
-    
-###############
-### INVOKER ###
-###############
-# second argument is 'invoker'
-try:    
-    startedby = sys.argv[2]
-    logger.info(_("co2monitor was started by {}").format(startedby))
-except: 
-    startedby = None
-    logger.info(_("co2monitor was started by hand").format(startedby))
-
-logger.debug(_("command-line arguments: {}").format(sys.argv[1:]))
+    @dbus.service.method(CO2MONITOR_INTERFACE, in_signature='', out_signature='')
+    def quit(self):
+        print("stopping co2monitor...")
+        self.loop.quit()
+        print("stopped co2monitor")
 
 
-
-####################
-### DEVICE SETUP ###
-####################
-# set up the device
-logger.info(_("setting up device '{}'").format(device))
-service.setup_device(device) # setup the device
-
-
-# start the logloop
-service.logloop()
-
+if __name__ == "__main__":
+    service = Service()
+    try:
+        service.run()
+    except KeyboardInterrupt:
+        service.quit()

@@ -1,9 +1,7 @@
 [Unit]
 Description=co2monitor - log data from specific usb co2 devices
-BindTo=%i.device
-After=%i.device
 
 [Service]
 Type=simple
 RemainAfterExit=no
-ExecStart=/usr/bin/co2monitor-service %I systemd
+ExecStart=/usr/bin/co2monitor-service
