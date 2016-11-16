@@ -15,6 +15,33 @@ class Co2MonitorGui():
         self.set_logger(logging.getLogger(__name__))
         # initially set an empty configuration
         self.set_config(configparser.ConfigParser())
+        # set up the quit signals
+        self.setup_signals(
+            signals = [signal.SIGINT, signal.SIGTERM, signal.SIGHUP],
+            handler = self.quit
+        )
+
+
+    def setup_signals(self, signals, handler):
+        """
+        This is a workaround to signal.signal(signal, handler)
+        which does not work with a GLib.MainLoop() for some reason.
+        Thanks to: http://stackoverflow.com/a/26457317/5433146
+        args:
+            signals (list of signal.SIG... signals): the signals to connect to
+            handler (function): function to be executed on these signals
+        """
+        def install_glib_handler(sig): # add a unix signal handler
+            GLib.unix_signal_add( GLib.PRIORITY_HIGH, 
+                sig, # for the given signal
+                handler, # on this signal, run this function
+                sig # with this argument
+                )
+
+        for sig in signals: # loop over all signals
+            GLib.idle_add( # 'execute'
+                install_glib_handler, sig, # add a handler for this signal
+                priority = GLib.PRIORITY_HIGH  )
 
     # build the gui
     def load_builder(self):
@@ -55,10 +82,7 @@ class Co2MonitorGui():
         self.mainloop = GLib.MainLoop() # main loop
         # signal.signal(signal.SIGINT, signal.SIG_DFL)
         self.logger.debug(_("Starting GLib main loop..."))
-        try:
-            self.mainloop.run()
-        except KeyboardInterrupt:
-            self.quit()
+        self.mainloop.run()
         self.logger.debug(_("GLib main loop ended."))
 
     # quit the gui

@@ -45,3 +45,4 @@ The folder structure (```etc```,```lib```,```usr```,```var```) is based on the [
 
 - Hendryk Plötz on [hackaday.io](https://hackaday.io/project/5301-reverse-engineering-a-low-cost-usb-co-monitor) for the device interaction
 - Mike Kazantsev on his blog on [fraggod.net](http://blog.fraggod.net/2012/06/16/proper-ish-way-to-start-long-running-systemd-service-on-udev-event-device-hotplug.html) for the systemd integration
+- Ascot on [StackOverflow.com](http://stackoverflow.com/a/26457317/5433146) for a workaround on ```signal.signal(signal, handler)``` when using a ```GLib.MainLoop```
