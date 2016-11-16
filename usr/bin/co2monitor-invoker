@@ -1,8 +1,12 @@
 #!/usr/bin/env python3
 import sys
+import time
 import dbus
+import dbus.mainloop.glib
 import logging
+import signal
 from subprocess import Popen, PIPE
+from gi.repository import GLib
 
 logger = logging.getLogger(__name__)
 
@@ -59,10 +63,24 @@ else:
     except: # systemd starting didn't work
         logger.debug(_("starting co2monitor via systemd's dbus interface didn't work."))
         # last resort: start co2monitor service by hand
-        # open "at now" process
         logger.info(_("starting co2monitor via 'at now'..."))
+        # open "at now" process
         atnow = Popen(["at","now"],stdin=PIPE,stdout=PIPE,stderr=PIPE)
+        # put text into 'at now' command
         atnow.communicate(input = b'/usr/bin/co2monitor-service')
-        logger.info(_("co2monitor started via 'at now'."))
+
+        # check if starting worked out
+        signal.alarm(10) # give it some seconds to register on dbus
+        while not systembus.name_has_owner(CO2MONITOR_BUSNAME):
+            timeleft = signal.alarm(0) # get alarm time left
+            if timeleft <= 1: # if alarm is nearly reached, stop
+                logger.info(_("co2monitor startup took too long via 'at now', didn't work."))
+                sys.exit() # exit
+            signal.alarm(timeleft) # continue alarm
+            time.sleep(1.1) # has to sleep more than 1 second, because
+                            # signal.alarm only returns full seconds
+        signal.alarm(0) # unset the alarm
+        logger.info(_("co2monitor successfully started via 'at now'."))
+
 
     
