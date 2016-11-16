@@ -1,15 +1,6 @@
 #!/usr/bin/env python3
-
 import sys
 import logging
-
-import dbus
-import dbus.service
-import dbus.mainloop.glib
-
-import threading
-
-from gi.repository import GObject
 
 logger = logging.getLogger(__name__)
 
@@ -39,57 +30,9 @@ co2monitor.config.setup_logger_from_config(
     config  = config
     )
 
-# define names
-CO2MONITOR_BUSNAME    = "de.nobodyinperson.co2monitor"
-CO2MONITOR_INTERFACE  = "de.nobodyinperson.co2monitor"
-CO2MONITOR_OBJECTPATH = "/de/nobodyinperson/co2monitor"
+import co2monitor.service
 
-# use glib as default mailoop for dbus
-dbus.mainloop.glib.DBusGMainLoop(set_as_default=True)
-
-class LogThread(threading.Thread):
-    def __init__(self, devicefile):
-        self.devicefile = devicefile
-
-    def run():
-        pass
-        
-
-class Service(dbus.service.Object):
-    def __init__(self):
-        self.loop = GObject.MainLoop() # create mainloop
-
-        systembus = dbus.SystemBus() # the system bus
-        systembus.request_name(CO2MONITOR_BUSNAME) # request the bus name
-        bus_name = dbus.service.BusName(CO2MONITOR_BUSNAME, systembus) # create bus name
-        # register the object on the bus name
-        dbus.service.Object.__init__(self, bus_name, CO2MONITOR_OBJECTPATH)
-
-
-    def run(self):
-        logger.info(_("Service running..."))
-        self.loop.run()
-        logger.info(_("Service stopped"))
-
-
-    @dbus.service.method(CO2MONITOR_INTERFACE, in_signature='', out_signature='s')
-    def status(self):
-        if self.loop.is_running():
-            return(_("running"))
-        else:
-            return(_("stopped"))
-            
-
-    @dbus.service.method(CO2MONITOR_INTERFACE, in_signature='', out_signature='')
-    def quit(self):
-        logger.info(_("stopping co2monitor..."))
-        self.loop.quit()
-        logger.info(_("stopped co2monitor"))
-
-
-if __name__ == "__main__":
-    service = Service()
-    try:
-        service.run()
-    except KeyboardInterrupt:
-        service.quit()
+service = co2monitor.service.Co2MonitorService()
+service.set_logger(logger)
+service.set_config(config)
+service.run()

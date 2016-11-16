@@ -1,98 +1,82 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
+import dbus
+import dbus.service
+import dbus.mainloop.glib
+
 import logging
-import configparser
-import sys, os, glob
-import csv
-import time
+import configparser 
 import signal
+import threading
 
-from . import device
+from gi.repository import GObject
 
-# logger
-logger = logging.getLogger(__name__)
+# define names
+CO2MONITOR_BUSNAME    = "de.nobodyinperson.co2monitor"
+CO2MONITOR_INTERFACE  = "de.nobodyinperson.co2monitor"
+CO2MONITOR_OBJECTPATH = "/de/nobodyinperson/co2monitor"
 
-##########################
-### monitoring service ###
-##########################
-class co2monitorService(object):
+class Co2MonitorService(dbus.service.Object):
     def __init__(self):
+        # initially set the standard logger
+        self.set_logger(logging.getLogger(__name__))
+        # initially set an empty configuration
+        self.set_config(configparser.ConfigParser())
+
         # handle SIGINT and SIGTERM
-        self.kill_now = False
         signal.signal(signal.SIGINT, self.please_stop_now)
-        signal.signal(signal.SIGTERM, self.please_stop_now)
+        # signal.signal(signal.SIGTERM, self.please_stop_now)
+
+        # use glib as default mailoop for dbus
+        dbus.mainloop.glib.DBusGMainLoop(set_as_default=True)
+
+        self.loop = GObject.MainLoop() # create mainloop
+
+        systembus = dbus.SystemBus() # the system bus
+        systembus.request_name(CO2MONITOR_BUSNAME) # request the bus name
+        bus_name = dbus.service.BusName(CO2MONITOR_BUSNAME, systembus) # create bus name
+        # register the object on the bus name
+        dbus.service.Object.__init__(self, bus_name, CO2MONITOR_OBJECTPATH)
+
+    # set the config
+    def set_config(self, config):
+        self.config = config
+
+    # set the logger
+    def set_logger(self, logger):
+        self.logger = logger
 
     # kindly stop logging
     def please_stop_now(self, signum=None, frame=None):
-        logger.info(" ".join([_("received stop signal {},"),
+        self.logger.info(" ".join([_("received stop signal {},"),
             _("will terminate soon...")]).format(signum))
-        self.kill_now = True
+        self.quit()
 
-    # set up config
-    def config_setup(self, configfiles):
-        # read config
-        self.config = configparser.ConfigParser()
-        self.config.read(configfiles)
+    def run(self):
+        self.logger.info(_("Service running..."))
+        self.loop.run()
+        self.logger.info(_("Service stopped"))
 
-    # set up the device
-    def setup_device(self, devicefile):
-        self.device = device.co2device(devicefile)
 
-    # loop 
-    def logloop(self):
-        datafolder = self.config.get('data-logging','datafolder')
+    @dbus.service.method(CO2MONITOR_INTERFACE, in_signature='', out_signature='s')
+    def status(self):
+        if self.loop.is_running():
+            return(_("running"))
+        else:
+            return(_("stopped"))
+            
 
-        if not os.path.isdir(datafolder): # check if data folder does not exist
-            os.makedirs(datafolder,0o755) # create data folder
+    @dbus.service.method(CO2MONITOR_INTERFACE, in_signature='', out_signature='')
+    def quit(self):
+        self.logger.info(_("stopping co2monitor..."))
+        self.loop.quit()
+        self.logger.info(_("stopped co2monitor"))
+
+
+class LogThread(threading.Thread):
+    def __init__(self, devicefile):
+        self.devicefile = devicefile
+
+    def run():
+        pass
         
-        fieldnames = ['time','temperature','co2']
-        datafile   = "{folder}/co2monitor-{time}.csv".format(
-            time = time.strftime("%Y%m%d%H%M%S",time.localtime()),
-            folder = datafolder
-            )
-
-        # warmup
-        warmuptime = self.config.getint('data-logging','warmuptime')
-        waittime = round(max(0,warmuptime - self.device.uptime()))
-        if waittime > 0:
-            logger.info(
-                _("giving the device another {} seconds of warmup time...").format(
-                waittime))
-            for i in range(waittime): 
-                if self.kill_now: break # stop if asked to stop
-                time.sleep(1) # sleep one second
-
-        with open(datafile, 'w') as csvfile: # open file
-            logger.info(_("opened {} for data logging.").format(datafile))
-            writer = csv.DictWriter(csvfile, fieldnames = fieldnames)
-
-            writer.writeheader()
-            measold = {}
-            while not self.kill_now: # read as long as you are allowed
-                meas = self.device.read() # read from device
-
-                if isinstance(meas, dict): # measurement worked
-                    # set time
-                    meas['time'] = time.strftime("%Y-%m-%d %H:%M:%S",
-                                                 time.localtime())
-    
-                    # check if this measurement introduces something new
-                    if meas.get('temperature',None)    != \
-                       measold.get('temperature',None) or \
-                       meas.get('co2',None) != measold.get('co2',None):
-                        # measurement is not only None
-                        if not meas.get('temperature',None) is None or \
-                           not meas.get('co2',None) is None:
-                            writer.writerow(meas) # write
-                            csvfile.flush() # writeout
-    
-                    
-                    # update old measurements
-                    measold.update(meas)
-                else: # measurement didn't work
-                    break # exit logloop
-                    #sys.exit(2) # stop!
-
-            # logging ended
-            logger.info(_("stopped logging."))
-        logger.debug(_("closed data logging file '{}'").format(datafile))
 

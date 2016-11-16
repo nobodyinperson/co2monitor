@@ -8,12 +8,13 @@ import os
 import configparser
 import signal
 
-# logger
-logger = logging.getLogger(__name__)
 
 class Co2MonitorGui():
     def __init__(self):
-        pass
+        # initially set the standard logger
+        self.set_logger(logging.getLogger(__name__))
+        # initially set an empty configuration
+        self.set_config(configparser.ConfigParser())
 
     # build the gui
     def load_builder(self):
@@ -26,6 +27,7 @@ class Co2MonitorGui():
     def set_config(self, config):
         self.config = config
 
+    # set the logger
     def set_logger(self, logger):
         self.logger = logger
 
