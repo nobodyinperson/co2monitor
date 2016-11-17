@@ -1,5 +1,6 @@
 co2monitor (0.0.8) UNRELEASED; urgency=medium
 
+  * new structure: udev -> invoker -> service
   * dbus integration
 
  -- Yann Büchau <yann.buechau@web.de>  Wed, 16 Nov 2016 10:39:43 +0100

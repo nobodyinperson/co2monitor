@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-17 00:48+0100\n"
-"PO-Revision-Date: 2016-11-17 00:51+0100\n"
+"POT-Creation-Date: 2016-11-17 01:03+0100\n"
+"PO-Revision-Date: 2016-11-17 01:03+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de\n"
@@ -175,6 +175,10 @@ msgstr ""
 #: usr/bin/co2monitor-invoker:83
 msgid "co2monitor successfully started via 'at now'."
 msgstr "co2monitor erfolgreich über 'at now' gestartet."
+
+#: usr/bin/co2monitor-invoker:87
+msgid "DEVNAME environment variable: {}"
+msgstr "DEVNAME Umgebungsvariable: {}"
 
 #~ msgid "co2monitor started via 'at now'."
 #~ msgstr "co2monitor wurde über 'at now' gestartet."
