@@ -44,7 +44,7 @@ coverage.xml
 .hypothesis/
 
 # Translations
-# *.mo
+*.mo
 *.pot
 
 # Django stuff:
@@ -79,6 +79,9 @@ celerybeat-schedule
 # virtualenv
 venv/
 ENV/
+
+# compiled manpages
+*.[0-9]
 
 # Spyder project settings
 .spyderproject

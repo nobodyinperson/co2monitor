@@ -6,6 +6,7 @@
 
 override_dh_install:
 	# don't install *.po files
+	# don't install the markdown manpage templates
 	dh_install --exclude=*.po
 
 override_dh_installinit:
