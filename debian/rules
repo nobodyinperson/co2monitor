@@ -4,6 +4,10 @@
 %:
 	dh $@ --with=systemd
 
+override_dh_install:
+	# don't install *.po files
+	dh_install --exclude=*.po
+
 override_dh_installinit:
 	dh_systemd_enable -pco2monitor --name=co2monitor co2monitor.service
 	dh_installinit -pco2monitor --no-start --noscripts
