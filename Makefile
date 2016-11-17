@@ -2,7 +2,7 @@
 
 # directories
 LANGDIR = usr/share/co2monitor/lang
-DOCDIR  = usr/share/doc/co2monitor
+DOCDIR  = usr/share/doc/co2monitor/manpages
 
 # the changelog
 CHANGELOG = debian/changelog

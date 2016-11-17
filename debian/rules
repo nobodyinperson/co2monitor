@@ -6,8 +6,12 @@
 
 override_dh_install:
 	# don't install *.po files
-	# don't install the markdown manpage templates
-	dh_install --exclude=*.po
+	# don't install a useless copy of the manpages
+	dh_install --exclude=*.po --exclude='.1' --exclude=manpages
+
+override_dh_installdocs:
+	# don't install a useless copy of the manpages
+	dh_installdocs --exclude='.1' --exclude=manpages
 
 override_dh_installinit:
 	dh_systemd_enable -pco2monitor --name=co2monitor co2monitor.service
