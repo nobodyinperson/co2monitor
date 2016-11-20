@@ -2,6 +2,7 @@
 Description=co2monitor - log data from specific usb co2 devices
 
 [Service]
-Type=simple
+Type=dbus
+BusName=de.nobodyinperson.co2monitor
 RemainAfterExit=no
 ExecStart=/usr/bin/co2monitor-service
