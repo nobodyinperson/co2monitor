@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-17 01:03+0100\n"
-"PO-Revision-Date: 2016-11-17 01:03+0100\n"
+"POT-Creation-Date: 2016-11-21 10:11+0100\n"
+"PO-Revision-Date: 2016-11-21 09:26+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de\n"
@@ -43,6 +43,22 @@ msgstr "Datenaufzeichnung beendet."
 #: usr/lib/co2monitor/python/co2monitor/service_old.py:97
 msgid "closed data logging file '{}'"
 msgstr "Datenaufzeichnungsdatei '{}' geschlossen"
+
+#: usr/lib/co2monitor/python/co2monitor/gui.py:76
+msgid "Welcome to Co2monitor!"
+msgstr "Willkommen bei Co2monitor!"
+
+#: usr/lib/co2monitor/python/co2monitor/gui.py:84
+msgid "Starting GLib main loop..."
+msgstr "starte GLib Hautpschleife..."
+
+#: usr/lib/co2monitor/python/co2monitor/gui.py:86
+msgid "GLib main loop ended."
+msgstr "GLib Hauptschleife beendet."
+
+#: usr/lib/co2monitor/python/co2monitor/gui.py:90
+msgid "Received quitting signal."
+msgstr "Anhaltesignal erhalten."
 
 #: usr/lib/co2monitor/python/co2monitor/device.py:31
 msgid "Device file '{}' does not exist."
@@ -83,22 +99,6 @@ msgstr "Versuche Neuverbindung..."
 #: usr/lib/co2monitor/python/co2monitor/device.py:150
 msgid "Could not reconnect. Aborting."
 msgstr "Konnte nicht wiederverbinden. Abbruch."
-
-#: usr/lib/co2monitor/python/co2monitor/gui.py:76
-msgid "Welcome to Co2monitor!"
-msgstr "Willkommen bei Co2monitor!"
-
-#: usr/lib/co2monitor/python/co2monitor/gui.py:84
-msgid "Starting GLib main loop..."
-msgstr "starte GLib Hautpschleife..."
-
-#: usr/lib/co2monitor/python/co2monitor/gui.py:86
-msgid "GLib main loop ended."
-msgstr "GLib Hauptschleife beendet."
-
-#: usr/lib/co2monitor/python/co2monitor/gui.py:90
-msgid "Received quitting signal."
-msgstr "Anhaltesignal erhalten."
 
 #: usr/lib/co2monitor/python/co2monitor/service.py:77
 msgid "Service running..."
