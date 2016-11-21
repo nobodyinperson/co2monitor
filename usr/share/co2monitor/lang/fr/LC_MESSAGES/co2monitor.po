@@ -1,0 +1,180 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-11-21 10:03+0100\n"
+"PO-Revision-Date: 2016-11-21 10:03+0100\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: fr_FR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.8.7.1\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: usr/lib/co2monitor/python/co2monitor/service_old.py:26
+#: usr/lib/co2monitor/python/co2monitor/service.py:72
+msgid "received stop signal {},"
+msgstr "reçu signal stop {}"
+
+#: usr/lib/co2monitor/python/co2monitor/service_old.py:27
+#: usr/lib/co2monitor/python/co2monitor/service.py:73
+msgid "will terminate soon..."
+msgstr "ja vais arrêter bientôt..."
+
+#: usr/lib/co2monitor/python/co2monitor/service_old.py:58
+msgid "giving the device another {} seconds of warmup time..."
+msgstr "J'attends quelques {} secondes pour l'appareil de se réchauffer..."
+
+#: usr/lib/co2monitor/python/co2monitor/service_old.py:65
+msgid "opened {} for data logging."
+msgstr "ouvert {} pour enregistrer les données."
+
+#: usr/lib/co2monitor/python/co2monitor/service_old.py:96
+msgid "stopped logging."
+msgstr "enregistrement arrêté."
+
+#: usr/lib/co2monitor/python/co2monitor/service_old.py:97
+msgid "closed data logging file '{}'"
+msgstr "fichier d'enregistrement '{}' fermé"
+
+#: usr/lib/co2monitor/python/co2monitor/gui.py:76
+msgid "Welcome to Co2monitor!"
+msgstr "Bienvenue à Co2monitor!"
+
+#: usr/lib/co2monitor/python/co2monitor/gui.py:84
+msgid "Starting GLib main loop..."
+msgstr "lance GLib boucle... "
+
+#: usr/lib/co2monitor/python/co2monitor/gui.py:86
+msgid "GLib main loop ended."
+msgstr "GLib boucle terminé."
+
+#: usr/lib/co2monitor/python/co2monitor/gui.py:90
+msgid "Received quitting signal."
+msgstr "reçu signal de interruption."
+
+#: usr/lib/co2monitor/python/co2monitor/device.py:31
+msgid "Device file '{}' does not exist."
+msgstr "Fichier d'appareil '{}' n'existe pas."
+
+#: usr/lib/co2monitor/python/co2monitor/device.py:81
+msgid "Checksum error"
+msgstr "erreur de somme de contrôle"
+
+#: usr/lib/co2monitor/python/co2monitor/device.py:81
+msgid "(never mind if {}"
+msgstr "(Ne t'en fais pas, si {}"
+
+#: usr/lib/co2monitor/python/co2monitor/device.py:82
+msgid "is the correct co2monitor device node...)"
+msgstr "est l'appareil correct...)"
+
+#: usr/lib/co2monitor/python/co2monitor/device.py:94
+msgid "opening co2 device file '{}'"
+msgstr "ouvert fichier d'appareil '{}'"
+
+#: usr/lib/co2monitor/python/co2monitor/device.py:97
+msgid "device '{}' does not exist."
+msgstr "L'appareil '{}' n'existe pas."
+
+#: usr/lib/co2monitor/python/co2monitor/device.py:101
+msgid "closing co2 device file '{}'"
+msgstr "ferme fichier d'appareil '{}'..."
+
+#: usr/lib/co2monitor/python/co2monitor/device.py:140
+msgid "Could not read from device '{}'"
+msgstr "Ne pourrais pas lire de l'appareil '{}'"
+
+#: usr/lib/co2monitor/python/co2monitor/device.py:141
+msgid "Trying to reconnect..."
+msgstr "Essai de reconnexion..."
+
+#: usr/lib/co2monitor/python/co2monitor/device.py:150
+msgid "Could not reconnect. Aborting."
+msgstr "Ne pourrais pas reconnecter. Interruption."
+
+#: usr/lib/co2monitor/python/co2monitor/service.py:77
+msgid "Service running..."
+msgstr "Le service marche..."
+
+#: usr/lib/co2monitor/python/co2monitor/service.py:79
+msgid "Service stopped"
+msgstr "Le service a terminé."
+
+#: usr/lib/co2monitor/python/co2monitor/service.py:85
+msgid "running"
+msgstr "en marchant"
+
+#: usr/lib/co2monitor/python/co2monitor/service.py:87
+msgid "stopped"
+msgstr "arrêté"
+
+#: usr/lib/co2monitor/python/co2monitor/service.py:92
+msgid "stopping co2monitor..."
+msgstr "en train d'arrêter co2monitor..."
+
+#: usr/lib/co2monitor/python/co2monitor/service.py:94
+msgid "stopped co2monitor"
+msgstr "co2monitor arrêté"
+
+#: usr/bin/co2monitor-service-old:86
+msgid "co2monitor was started by {}"
+msgstr "Co2moniteur était lancé par {}."
+
+#: usr/bin/co2monitor-service-old:89
+msgid "co2monitor was started by hand"
+msgstr ""
+"C\n"
+"o2monitor étais lancé á la main."
+
+#: usr/bin/co2monitor-service-old:91
+msgid "command-line arguments: {}"
+msgstr "arguments de ligne de commande: {}"
+
+#: usr/bin/co2monitor-service-old:99
+msgid "setting up device '{}'"
+msgstr "installation de l'appareil '{}'"
+
+#: usr/bin/co2monitor-invoker:48
+msgid "co2monitor is running"
+msgstr "co2monitor marche"
+
+#: usr/bin/co2monitor-invoker:50
+msgid "co2monitor is not running"
+msgstr "co2monitor ne marche pas"
+
+#: usr/bin/co2monitor-invoker:53
+msgid "trying to start co2monitor via systemd's dbus interface..."
+msgstr "essai de lancer co2monitor par l'interface dbus de systemd..."
+
+#: usr/bin/co2monitor-invoker:62
+msgid "started co2monitor via systemd's dbus interface."
+msgstr "co2monitor lancé par l'interface dbus de systemd."
+
+#: usr/bin/co2monitor-invoker:64
+msgid "starting co2monitor via systemd's dbus interface didn't work."
+msgstr "Lancer co2monitor par l'interface dbus de systemd n'a pas marché."
+
+#: usr/bin/co2monitor-invoker:66
+msgid "starting co2monitor via 'at now'..."
+msgstr "lance co2monitor par 'at now'..."
+
+#: usr/bin/co2monitor-invoker:77
+msgid "co2monitor startup took too long via 'at now', didn't work."
+msgstr ""
+"Lancer co2monitor par 'at now' n'a pas marché, ça durait trop longtemps."
+
+#: usr/bin/co2monitor-invoker:83
+msgid "co2monitor successfully started via 'at now'."
+msgstr "co2monitor était lancé par 'at now' avec succès."
+
+#: usr/bin/co2monitor-invoker:87
+msgid "DEVNAME environment variable: {}"
+msgstr "variable d'environnement DEVNAME: {}"
