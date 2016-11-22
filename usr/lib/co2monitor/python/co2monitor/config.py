@@ -65,7 +65,7 @@ def setup_logger_from_config(logger,section,config=None):
     if logfile:
         try:
             # create a file handler and log to that file
-            handler = logging.FileHandler(filename = logfile)
+            handler = logging.FileHandler(filename = logfile, encoding="UTF-8")
         except: # e.g. file permissions don't work
             # create a stream handler and log to stderr
             handler = logging.StreamHandler()
