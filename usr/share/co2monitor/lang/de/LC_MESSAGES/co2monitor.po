@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-21 10:11+0100\n"
+"POT-Creation-Date: 2016-11-22 09:22+0100\n"
 "PO-Revision-Date: 2016-11-21 09:26+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -19,12 +19,12 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: usr/lib/co2monitor/python/co2monitor/service_old.py:26
-#: usr/lib/co2monitor/python/co2monitor/service.py:72
+#: usr/lib/co2monitor/python/co2monitor/service.py:73
 msgid "received stop signal {},"
 msgstr "Anhaltesignal {} erhalten,"
 
 #: usr/lib/co2monitor/python/co2monitor/service_old.py:27
-#: usr/lib/co2monitor/python/co2monitor/service.py:73
+#: usr/lib/co2monitor/python/co2monitor/service.py:74
 msgid "will terminate soon..."
 msgstr "werde bald anhalten..."
 
@@ -100,29 +100,46 @@ msgstr "Versuche Neuverbindung..."
 msgid "Could not reconnect. Aborting."
 msgstr "Konnte nicht wiederverbinden. Abbruch."
 
-#: usr/lib/co2monitor/python/co2monitor/service.py:77
+#: usr/lib/co2monitor/python/co2monitor/service.py:78
 msgid "Service running..."
 msgstr "Service läuft..."
 
-#: usr/lib/co2monitor/python/co2monitor/service.py:79
+#: usr/lib/co2monitor/python/co2monitor/service.py:80
 msgid "Service stopped"
 msgstr "Service beendet"
 
-#: usr/lib/co2monitor/python/co2monitor/service.py:85
+#: usr/lib/co2monitor/python/co2monitor/service.py:84
+msgid "received request to start logging on device {}"
+msgstr ""
+
+#: usr/lib/co2monitor/python/co2monitor/service.py:87
+msgid "starting logging thread for device {}"
+msgstr ""
+
+#: usr/lib/co2monitor/python/co2monitor/service.py:99
 msgid "running"
 msgstr "aktiv"
 
-#: usr/lib/co2monitor/python/co2monitor/service.py:87
+#: usr/lib/co2monitor/python/co2monitor/service.py:101
 msgid "stopped"
 msgstr "inaktiv"
 
-#: usr/lib/co2monitor/python/co2monitor/service.py:92
+#: usr/lib/co2monitor/python/co2monitor/service.py:106
 msgid "stopping co2monitor..."
 msgstr "stoppe co2monitor..."
 
-#: usr/lib/co2monitor/python/co2monitor/service.py:94
+#: usr/lib/co2monitor/python/co2monitor/service.py:108
 msgid "stopped co2monitor"
 msgstr "co2monitor angehalten"
+
+#: usr/lib/co2monitor/python/co2monitor/service.py:147
+msgid "I was told to stop, will stop data logging soon..."
+msgstr ""
+
+#: usr/lib/co2monitor/python/co2monitor/service.py:155
+#, fuzzy
+msgid "Starting data logging on device {}"
+msgstr "Datenaufzeichnungsdatei '{}' geschlossen"
 
 #: usr/bin/co2monitor-service-old:86
 msgid "co2monitor was started by {}"

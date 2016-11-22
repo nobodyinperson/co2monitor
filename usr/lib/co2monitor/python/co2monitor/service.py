@@ -7,6 +7,7 @@ import logging
 import configparser 
 import signal
 import threading
+import os
 
 from gi.repository import GLib
 
@@ -78,6 +79,19 @@ class Co2MonitorService(dbus.service.Object):
         self.loop.run()
         self.logger.info(_("Service stopped"))
 
+    @dbus.service.method(CO2MONITOR_INTERFACE, in_signature='s', out_signature='')
+    def start_device_logging(self, devicefile):
+        self.logger.info(_("received request to start logging on device {}").format(
+            devicefile))
+        thread = LogThread(devicefile = devicefile) # logger object
+        self.logger.info(_("starting logging thread for device {}").format(
+            devicefile))
+        # same logger as service
+        thread.set_logger(self.logger)
+        # same config as service
+        thread.set_config(self.config)
+        thread.start()
+
 
     @dbus.service.method(CO2MONITOR_INTERFACE, in_signature='', out_signature='s')
     def status(self):
@@ -94,11 +108,50 @@ class Co2MonitorService(dbus.service.Object):
         self.logger.info(_("stopped co2monitor"))
 
 
-class LogThread(threading.Thread):
+class LogThread(threading.Thread, dbus.service.Object):
     def __init__(self, devicefile):
+        # by default, log!
+        self.do_data_logging = True
+        # initially set the standard logger
+        self.set_logger(logging.getLogger(__name__))
+        # initially set an empty configuration
+        self.set_config(configparser.ConfigParser())
+
+        # use glib as default mailoop for dbus
+        dbus.mainloop.glib.DBusGMainLoop(set_as_default=True)
+
+        systembus = dbus.SystemBus() # the system bus
+        systembus.request_name(CO2MONITOR_BUSNAME) # request the bus name
+        bus_name = dbus.service.BusName(CO2MONITOR_BUSNAME, systembus) # create bus name
+
         self.devicefile = devicefile
 
-    def run():
-        pass
-        
+        # register the object on the bus name
+        objectpath = "/".join([CO2MONITOR_OBJECTPATH,
+            os.path.basename(self.devicefile)])
+        dbus.service.Object.__init__(self, bus_name, objectpath)
+        threading.Thread.__init__(self)
+
+
+    # set the config
+    def set_config(self, config):
+        self.config = config
+
+    # set the logger
+    def set_logger(self, logger):
+        self.logger = logger
+
+    # kindly stop logging
+    @dbus.service.method(CO2MONITOR_INTERFACE, in_signature='', out_signature='')
+    def please_stop_now(self):
+        self.logger.info(_("I was told to stop, will stop data logging soon..."))
+        self.quit()
+
+    # Negate the data logging condition
+    def quit(self):
+        self.do_data_logging = False
+
+    def run(self):
+        self.logger.info(_("Starting data logging on device {}").format(
+            self.devicefile))
 

@@ -2,6 +2,6 @@
 # remove __pycache__ folder before removing package
 # otherwise dpkg complains about non-empty /usr/lib/co2monitor directory.
 # Maybe there is a more elegant way to solve this...
-if test -e /usr/lib/co2monitor;then
-    find /usr/lib/co2monitor -type d -iname '__pycache__' -exec rm -rf {} \;
-fi
+for file in $(find usr -type d -iname '__pycache__');do
+    rm -rf $file
+done
