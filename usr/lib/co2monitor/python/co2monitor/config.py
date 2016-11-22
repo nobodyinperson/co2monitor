@@ -8,7 +8,9 @@ import configparser
 # install the user language globally
 def install_language_globally():
     # get user system language
-    user_language = os.environ.get('LANGUAGE','##')
+    user_language = os.environ.get('LANG',     # first, try LANG 
+                    os.environ.get('LANGUAGE', # then try LANGUAGE
+                                   '##'))      # bogus value
     # init translation
     lang = gettext.translation(
         domain    = 'co2monitor',                  # domain
@@ -61,8 +63,12 @@ def setup_logger_from_config(logger,section,config=None):
 
     # create a handler
     if logfile:
-        # create a file handler and log to that file
-        handler = logging.FileHandler(filename = logfile)
+        try:
+            # create a file handler and log to that file
+            handler = logging.FileHandler(filename = logfile)
+        except: # e.g. file permissions don't work
+            # create a stream handler and log to stderr
+            handler = logging.StreamHandler()
     else:
         # create a stream handler and log to stderr
         handler = logging.StreamHandler()

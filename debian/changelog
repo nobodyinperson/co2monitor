@@ -1,7 +1,8 @@
-co2monitor (0.0.8) UNRELEASED; urgency=medium
+co2monitor (0.0.8) unstable; urgency=medium
 
   * new structure: udev -> invoker -> service
   * dbus integration
+  * handling of multiple devices in parallel
   * don't install some unnecessary files 
   * add French translation
 

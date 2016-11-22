@@ -43,11 +43,29 @@ CO2MONITOR_OBJECTPATH = "/de/nobodyinperson/co2monitor"
 
 systembus = dbus.SystemBus() # the system bus
 
+###############################################
+### Make sure co2monitor-service is running ###
+###############################################
+def wait_for_co2monitor_service_on_dbus(seconds=10):
+    # check if starting worked out
+    signal.alarm(seconds) # give it some seconds to register on dbus
+    while not systembus.name_has_owner(CO2MONITOR_BUSNAME):
+        timeleft = signal.alarm(0) # get alarm time left
+        if timeleft <= 1: # if alarm is nearly reached, stop
+            signal.alarm(0) # unset the alarm
+            return False
+        signal.alarm(timeleft) # continue alarm
+        time.sleep(1.1) # has to sleep more than 1 second, because
+                        # signal.alarm only returns full seconds
+    signal.alarm(0) # unset the alarm
+    return True
+    
+
 # check if the co2monitor service is already running
 if systembus.name_has_owner(CO2MONITOR_BUSNAME):
-    logger.info(_("co2monitor is running"))
+    logger.debug(_("co2monitor is already running"))
 else:
-    logger.info(_("co2monitor is not running"))
+    logger.debug(_("co2monitor is not running"))
     
     try: # try to start co2monitor via systemd
         logger.info(_("trying to start co2monitor via systemd's dbus interface..."))
@@ -59,7 +77,13 @@ else:
             dbus_interface="org.freedesktop.systemd1.Manager")
         # let the manager start the co2monitor.service unit
         systemd_manager.StartUnit("co2monitor.service","replace")
-        logger.info(_("started co2monitor via systemd's dbus interface."))
+        logger.debug(_("instructed systemd via dbus to start co2monitor."))
+        # check if it worked
+        if wait_for_co2monitor_service_on_dbus():
+            logger.info(_("co2monitor was successfully started via systemd's dbus interface."))
+        else:
+            logger.info(_("co2monitor startup took too long via systemd, didn't work."))
+            raise Exception() # go into the except path
     except: # systemd starting didn't work
         logger.debug(_("starting co2monitor via systemd's dbus interface didn't work."))
         # last resort: start co2monitor service by hand
@@ -69,19 +93,43 @@ else:
         # put text into 'at now' command
         atnow.communicate(input = b'/usr/bin/co2monitor-service')
 
-        # check if starting worked out
-        signal.alarm(10) # give it some seconds to register on dbus
-        while not systembus.name_has_owner(CO2MONITOR_BUSNAME):
-            timeleft = signal.alarm(0) # get alarm time left
-            if timeleft <= 1: # if alarm is nearly reached, stop
-                logger.info(_("co2monitor startup took too long via 'at now', didn't work."))
-                sys.exit() # exit
-            signal.alarm(timeleft) # continue alarm
-            time.sleep(1.1) # has to sleep more than 1 second, because
-                            # signal.alarm only returns full seconds
-        signal.alarm(0) # unset the alarm
-        logger.info(_("co2monitor successfully started via 'at now'."))
+        if wait_for_co2monitor_service_on_dbus():
+            logger.info(_("co2monitor successfully started via 'at now'."))
+        else:
+            logger.info(_("co2monitor startup took too long via 'at now', didn't work."))
+            sys.exit() # exit
 
 
-# now that co2monitor runs, tell it the device to log
-logger.debug(_("DEVNAME environment variable: {}".format(os.environ.get('DEVNAME'))))
+
+#########################################
+### co2monitor-service is running now ###
+#########################################
+
+#############################################
+### tell co2monitor-service to log device ###
+#############################################
+
+# get DEVNAME environment variable
+DEVNAME = os.environ.get('DEVNAME')
+if not DEVNAME: # stop if there is no devname environment variable
+    logger.critical(_("no DEVNAME environment variable given. Aborting."))
+    sys.exit(1)
+
+logger.debug(_("DEVNAME environment variable: {}".format(DEVNAME)))
+if not os.path.exists(DEVNAME):
+    logger.critical(
+        _("DEVNAME environment variable '{}' is a non-existant file.  Aborting."
+        ).format(DEVNAME))
+    sys.exit(1)
+    
+# now there is a DEVNAME variable that holds an existant file
+
+# get the co2monitor-service proxy object
+co2monitor_service_proxy = systembus.get_object(CO2MONITOR_BUSNAME,
+    CO2MONITOR_OBJECTPATH)
+# get the interface
+co2monitor_service_interface = dbus.Interface(co2monitor_service_proxy,
+    CO2MONITOR_INTERFACE)
+# start the device logging
+co2monitor_service_interface.start_device_logging(DEVNAME)
+
