@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-22 12:28+0100\n"
-"PO-Revision-Date: 2016-11-21 10:03+0100\n"
+"POT-Creation-Date: 2016-11-22 13:38+0100\n"
+"PO-Revision-Date: 2016-11-22 13:51+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: fr_FR\n"
@@ -17,36 +17,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 1.8.7.1\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-
-#: usr/lib/co2monitor/python/co2monitor/service_old.py:26
-#: usr/lib/co2monitor/python/co2monitor/service.py:79
-msgid "received stop signal {},"
-msgstr "reçu signal stop {}"
-
-#: usr/lib/co2monitor/python/co2monitor/service_old.py:27
-#: usr/lib/co2monitor/python/co2monitor/service.py:80
-msgid "will terminate soon..."
-msgstr "ja vais arrêter bientôt..."
-
-#: usr/lib/co2monitor/python/co2monitor/service_old.py:58
-#: usr/lib/co2monitor/python/co2monitor/service.py:230
-msgid "giving the device another {} seconds of warmup time..."
-msgstr "J'attends quelques {} secondes pour l'appareil de se réchauffer..."
-
-#: usr/lib/co2monitor/python/co2monitor/service_old.py:65
-#: usr/lib/co2monitor/python/co2monitor/service.py:239
-msgid "opened {} for data logging."
-msgstr "ouvert {} pour enregistrer les données."
-
-#: usr/lib/co2monitor/python/co2monitor/service_old.py:96
-#: usr/lib/co2monitor/python/co2monitor/service.py:286
-msgid "stopped logging."
-msgstr "enregistrement arrêté."
-
-#: usr/lib/co2monitor/python/co2monitor/service_old.py:97
-#: usr/lib/co2monitor/python/co2monitor/service.py:287
-msgid "closed data logging file '{}'"
-msgstr "fichier d'enregistrement '{}' fermé"
 
 #: usr/lib/co2monitor/python/co2monitor/device.py:31
 msgid "Device file '{}' does not exist."
@@ -104,131 +74,121 @@ msgstr "GLib boucle terminé."
 msgid "Received quitting signal."
 msgstr "reçu signal de interruption."
 
-#: usr/lib/co2monitor/python/co2monitor/service.py:84
+#: usr/lib/co2monitor/python/co2monitor/service.py:82
+msgid "received stop signal {},"
+msgstr "reçu signal stop {}"
+
+#: usr/lib/co2monitor/python/co2monitor/service.py:83
+msgid "will terminate soon..."
+msgstr "ja vais arrêter bientôt..."
+
+#: usr/lib/co2monitor/python/co2monitor/service.py:87
 msgid "Service running..."
 msgstr "Le service marche..."
 
-#: usr/lib/co2monitor/python/co2monitor/service.py:86
+#: usr/lib/co2monitor/python/co2monitor/service.py:89
 msgid "Service stopped"
 msgstr "Le service a terminé."
 
-#: usr/lib/co2monitor/python/co2monitor/service.py:90
-msgid "received request to start logging on device {}"
-msgstr ""
-
 #: usr/lib/co2monitor/python/co2monitor/service.py:93
-msgid "starting logging thread for device {}"
-msgstr ""
+msgid "received request to start logging on device {}"
+msgstr "reçu ordre d'enregistrement pour appareil {}"
 
-#: usr/lib/co2monitor/python/co2monitor/service.py:106
+#: usr/lib/co2monitor/python/co2monitor/service.py:96
+msgid "starting logging thread for device {}"
+msgstr "commence thread d'enregistrement pur appareil {}"
+
+#: usr/lib/co2monitor/python/co2monitor/service.py:109
 msgid "running"
 msgstr "en marchant"
 
-#: usr/lib/co2monitor/python/co2monitor/service.py:108
+#: usr/lib/co2monitor/python/co2monitor/service.py:111
 msgid "stopped"
 msgstr "arrêté"
 
-#: usr/lib/co2monitor/python/co2monitor/service.py:113
+#: usr/lib/co2monitor/python/co2monitor/service.py:116
 msgid "stopping co2monitor..."
 msgstr "en train d'arrêter co2monitor..."
 
-#: usr/lib/co2monitor/python/co2monitor/service.py:115
+#: usr/lib/co2monitor/python/co2monitor/service.py:118
 msgid "stopped co2monitor"
 msgstr "co2monitor arrêté"
 
-#: usr/lib/co2monitor/python/co2monitor/service.py:147
+#: usr/lib/co2monitor/python/co2monitor/service.py:151
 msgid "idle"
-msgstr ""
+msgstr "inoccupé"
 
-#: usr/lib/co2monitor/python/co2monitor/service.py:161
-msgid "Setting the event."
-msgstr ""
-
-#: usr/lib/co2monitor/python/co2monitor/service.py:163
-msgid "Clearing the event."
-msgstr ""
-
-#: usr/lib/co2monitor/python/co2monitor/service.py:191
+#: usr/lib/co2monitor/python/co2monitor/service.py:188
 msgid "Request to stop logging on device {} - will terminate soon..."
-msgstr ""
+msgstr "reçu ordre stop d'enregistrement pour appareil {} - vais arrêter bientôt..."
 
-#: usr/lib/co2monitor/python/co2monitor/service.py:200
-#, fuzzy
+#: usr/lib/co2monitor/python/co2monitor/service.py:197
 msgid "Shutting down logging thread of device {}"
-msgstr "fichier d'enregistrement '{}' fermé"
+msgstr "en train d'éteindre le thread d'enregistrement pour appareil {} "
 
-#: usr/lib/co2monitor/python/co2monitor/service.py:207
-#, fuzzy
+#: usr/lib/co2monitor/python/co2monitor/service.py:204
 msgid "Starting data logging on device {}"
-msgstr "fichier d'enregistrement '{}' fermé"
+msgstr "commence enregistrement pour appareil {}"
+
+#: usr/lib/co2monitor/python/co2monitor/service.py:208
+msgid "creating data directory"
+msgstr "créer le dossier de données"
 
 #: usr/lib/co2monitor/python/co2monitor/service.py:211
-msgid "creating data directory"
-msgstr ""
-
-#: usr/lib/co2monitor/python/co2monitor/service.py:214
 msgid "created data directory"
-msgstr ""
+msgstr "crée dossier de données"
 
-#: usr/lib/co2monitor/python/co2monitor/service.py:228
-#, fuzzy
+#: usr/lib/co2monitor/python/co2monitor/service.py:225
 msgid "device warmup"
-msgstr "Ne pourrais pas lire de l'appareil '{}'"
+msgstr "rechauffage de l'appareil"
+
+#: usr/lib/co2monitor/python/co2monitor/service.py:227
+msgid "giving the device another {} seconds of warmup time..."
+msgstr "J'attends quelques {} secondes pour l'appareil de se réchauffer..."
+
+#: usr/lib/co2monitor/python/co2monitor/service.py:233
+msgid "opening data file"
+msgstr "ouvrir fichier d'enregistrement"
+
+#: usr/lib/co2monitor/python/co2monitor/service.py:235
+msgid "opened data file"
+msgstr "ourvert fichier d'enregistrement"
 
 #: usr/lib/co2monitor/python/co2monitor/service.py:236
-#, fuzzy
-msgid "opening data file"
-msgstr "ouvert fichier d'appareil '{}'"
+msgid "opened {} for data logging."
+msgstr "ouvert {} pour enregistrer les données."
 
-#: usr/lib/co2monitor/python/co2monitor/service.py:238
-#, fuzzy
-msgid "opened data file"
-msgstr "ouvert fichier d'appareil '{}'"
-
-#: usr/lib/co2monitor/python/co2monitor/service.py:243
+#: usr/lib/co2monitor/python/co2monitor/service.py:240
 msgid "writing header to file"
-msgstr ""
+msgstr "enregistrer zond d'en-tête au fichier"
 
-#: usr/lib/co2monitor/python/co2monitor/service.py:248
-#, fuzzy
+#: usr/lib/co2monitor/python/co2monitor/service.py:245
 msgid "reading from device"
-msgstr "Ne pourrais pas lire de l'appareil '{}'"
+msgstr "en lisant de l'appareil"
 
-#: usr/lib/co2monitor/python/co2monitor/service.py:252
+#: usr/lib/co2monitor/python/co2monitor/service.py:249
 msgid "postprocessing raw data"
-msgstr ""
+msgstr "travail postérieur des données crus"
 
-#: usr/lib/co2monitor/python/co2monitor/service.py:275
+#: usr/lib/co2monitor/python/co2monitor/service.py:272
 msgid "writing data to file"
-msgstr ""
+msgstr "écrire les données au fichier"
 
-#: usr/lib/co2monitor/python/co2monitor/service.py:289
-#, fuzzy
-msgid "Stopped data logging on device {}"
+#: usr/lib/co2monitor/python/co2monitor/service.py:283
+msgid "stopped logging."
+msgstr "enregistrement arrêté."
+
+#: usr/lib/co2monitor/python/co2monitor/service.py:284
+msgid "closed data logging file '{}'"
 msgstr "fichier d'enregistrement '{}' fermé"
 
-#: usr/bin/co2monitor-service-old:86
-msgid "co2monitor was started by {}"
-msgstr "Co2moniteur était lancé par {}."
-
-#: usr/bin/co2monitor-service-old:89
-msgid "co2monitor was started by hand"
-msgstr ""
-"C\n"
-"o2monitor étais lancé á la main."
-
-#: usr/bin/co2monitor-service-old:91
-msgid "command-line arguments: {}"
-msgstr "arguments de ligne de commande: {}"
-
-#: usr/bin/co2monitor-service-old:99
-msgid "setting up device '{}'"
-msgstr "installation de l'appareil '{}'"
+#: usr/lib/co2monitor/python/co2monitor/service.py:286
+msgid "Stopped data logging on device {}"
+msgstr "arrêté enregistrement d'appareil {}"
 
 #: usr/bin/co2monitor-invoker:66
-#, fuzzy
 msgid "co2monitor is already running"
-msgstr "co2monitor marche"
+msgstr "co2monitor marche déja"
 
 #: usr/bin/co2monitor-invoker:68
 msgid "co2monitor is not running"
@@ -240,18 +200,15 @@ msgstr "essai de lancer co2monitor par l'interface dbus de systemd..."
 
 #: usr/bin/co2monitor-invoker:80
 msgid "instructed systemd via dbus to start co2monitor."
-msgstr ""
+msgstr "Instructé systemd par dbus de lancer co2monitor."
 
 #: usr/bin/co2monitor-invoker:83
-#, fuzzy
 msgid "co2monitor was successfully started via systemd's dbus interface."
-msgstr "co2monitor était lancé par 'at now' avec succès."
+msgstr "co2monitor était lancé par l'interface dbus de systemd avec succès."
 
 #: usr/bin/co2monitor-invoker:85
-#, fuzzy
 msgid "co2monitor startup took too long via systemd, didn't work."
-msgstr ""
-"Lancer co2monitor par 'at now' n'a pas marché, ça durait trop longtemps."
+msgstr "Lancer co2monitor par systemd n'a pas marché, ça durait trop longtemps."
 
 #: usr/bin/co2monitor-invoker:88
 msgid "starting co2monitor via systemd's dbus interface didn't work."
@@ -267,22 +224,33 @@ msgstr "co2monitor était lancé par 'at now' avec succès."
 
 #: usr/bin/co2monitor-invoker:99
 msgid "co2monitor startup took too long via 'at now', didn't work."
-msgstr ""
-"Lancer co2monitor par 'at now' n'a pas marché, ça durait trop longtemps."
+msgstr "Lancer co2monitor par 'at now' n'a pas marché, ça durait trop longtemps."
 
 #: usr/bin/co2monitor-invoker:115
-#, fuzzy
 msgid "no DEVNAME environment variable given. Aborting."
-msgstr "variable d'environnement DEVNAME: {}"
+msgstr "pas de variable d'environnement DEVNAME. Interruption."
 
 #: usr/bin/co2monitor-invoker:118
 msgid "DEVNAME environment variable: {}"
 msgstr "variable d'environnement DEVNAME: {}"
 
 #: usr/bin/co2monitor-invoker:121
-#, fuzzy
 msgid "DEVNAME environment variable '{}' is a non-existant file.  Aborting."
-msgstr "variable d'environnement DEVNAME: {}"
+msgstr "variable d'environnement DEVNAME '{}' est un fichier pas existant. Interruption."
+
+#~ msgid "co2monitor was started by {}"
+#~ msgstr "Co2moniteur était lancé par {}."
+
+#~ msgid "co2monitor was started by hand"
+#~ msgstr ""
+#~ "C\n"
+#~ "o2monitor étais lancé á la main."
+
+#~ msgid "command-line arguments: {}"
+#~ msgstr "arguments de ligne de commande: {}"
+
+#~ msgid "setting up device '{}'"
+#~ msgstr "installation de l'appareil '{}'"
 
 #, fuzzy
 #~ msgid "reading from device {}..."
