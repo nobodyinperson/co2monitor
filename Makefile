@@ -44,7 +44,7 @@ $(POTFILE): $(PYTHONFILES)
 
 # update the translated catalog
 %.po: $(POTFILE)
-	msgmerge -U $@ $<
+	VERSION_CONTROL=off msgmerge -U --backup=off $@ $<
 
 # compile the translations
 %.mo: %.po
