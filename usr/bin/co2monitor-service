@@ -2,6 +2,8 @@
 import sys
 import logging
 import signal
+import dbus
+import dbus.mainloop.glib
 
 logger = logging.getLogger(__name__)
 
@@ -32,6 +34,20 @@ co2monitor.config.setup_logger_from_config(
     )
 
 import co2monitor.service
+
+# define names
+CO2MONITOR_BUSNAME    = "de.nobodyinperson.co2monitor"
+CO2MONITOR_INTERFACE  = "de.nobodyinperson.co2monitor"
+CO2MONITOR_OBJECTPATH = "/de/nobodyinperson/co2monitor"
+
+dbus.mainloop.glib.DBusGMainLoop(set_as_default=True)
+systembus = dbus.SystemBus() # the system bus
+
+# co2monitor is already running
+if systembus.name_has_owner(CO2MONITOR_BUSNAME):
+    logger.warning(_("co2monitor is already running. Aborting."))
+    sys.exit()
+
 
 service = co2monitor.service.Co2MonitorService()
 service.set_logger(logger)

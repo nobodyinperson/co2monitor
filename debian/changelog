@@ -1,3 +1,9 @@
+co2monitor (0.0.9) UNRELEASED; urgency=medium
+
+  * fix multiple co2monitor-service invocation bug
+
+ -- Yann Büchau <yann.buechau@web.de>  Wed, 23 Nov 2016 16:09:33 +0100
+
 co2monitor (0.0.8) unstable; urgency=medium
 
   * new structure: udev -> invoker -> service
