@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
-import sys, os
+import sys, os, re
 import time
 import dbus
 import dbus.mainloop.glib
 import logging
 import signal
-from subprocess import Popen, PIPE
+from subprocess import Popen, PIPE, check_output
 from gi.repository import GLib
 
 logger = logging.getLogger(__name__)
@@ -59,6 +59,24 @@ def wait_for_co2monitor_service_on_dbus(seconds=10):
                         # signal.alarm only returns full seconds
     signal.alarm(0) # unset the alarm
     return True
+
+# def other_invoker_running():
+#     psaux = check_output(['ps','-eo','pid,cmd']).decode().split("\n")
+#     reg = re.compile("^\s*(?!{pid}).*python3\s+.*co2monitor-invoker".format(pid=os.getpid()))
+#     invokers = [ps for ps in psaux if reg.match(ps)]
+#     logger.debug(invokers)
+#     return len(invokers) > 0
+
+# def wait_for_other_invoker_to_end():
+#     while other_invoker_running():
+#         time.sleep(0.1)
+    
+# # make sure to wait for other invokers to end
+# if other_invoker_running():
+#     logger.debug(_("waiting for other co2monitor-invoker instances to end"))
+#     wait_for_other_invoker_to_end()
+# else:
+#     logger.debug(_("no other co2monitor-invoker instances active"))
     
 
 # check if the co2monitor service is already running

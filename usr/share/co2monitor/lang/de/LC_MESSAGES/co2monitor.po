@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-22 13:38+0100\n"
+"POT-Creation-Date: 2016-11-23 09:22+0100\n"
 "PO-Revision-Date: 2016-11-22 13:56+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -188,61 +188,61 @@ msgstr "Datenaufzeichnungsdatei '{}' geschlossen"
 msgid "Stopped data logging on device {}"
 msgstr "beende Datenaufzeichnung auf Gerät {}"
 
-#: usr/bin/co2monitor-invoker:66
+#: usr/bin/co2monitor-invoker:84
 msgid "co2monitor is already running"
 msgstr "co2monitor läuft bereits"
 
-#: usr/bin/co2monitor-invoker:68
+#: usr/bin/co2monitor-invoker:86
 msgid "co2monitor is not running"
 msgstr "co2monitor läuft nicht"
 
-#: usr/bin/co2monitor-invoker:71
+#: usr/bin/co2monitor-invoker:89
 msgid "trying to start co2monitor via systemd's dbus interface..."
 msgstr "versuche, co2monitor über das DBus Interface von systemd zu starten..."
 
-#: usr/bin/co2monitor-invoker:80
+#: usr/bin/co2monitor-invoker:98
 msgid "instructed systemd via dbus to start co2monitor."
 msgstr "systemd wurde über dbus angewiesen, co2monitor zu starten."
 
-#: usr/bin/co2monitor-invoker:83
+#: usr/bin/co2monitor-invoker:101
 msgid "co2monitor was successfully started via systemd's dbus interface."
 msgstr "co2monitor erfolgreich über das DBus-Interface von systemd gestartet."
 
-#: usr/bin/co2monitor-invoker:85
+#: usr/bin/co2monitor-invoker:103
 msgid "co2monitor startup took too long via systemd, didn't work."
 msgstr ""
 "co2monitor über systemd zu starten, hat zu lange gedauert, nicht "
 "funktioniert."
 
-#: usr/bin/co2monitor-invoker:88
+#: usr/bin/co2monitor-invoker:106
 msgid "starting co2monitor via systemd's dbus interface didn't work."
 msgstr ""
 "co2monitor über das DBus Interface von systemd zu starten, hat nicht "
 "funktioniert."
 
-#: usr/bin/co2monitor-invoker:90
+#: usr/bin/co2monitor-invoker:108
 msgid "starting co2monitor via 'at now'..."
 msgstr "starte co2monitor über 'at now'..."
 
-#: usr/bin/co2monitor-invoker:97
+#: usr/bin/co2monitor-invoker:115
 msgid "co2monitor successfully started via 'at now'."
 msgstr "co2monitor erfolgreich über 'at now' gestartet."
 
-#: usr/bin/co2monitor-invoker:99
+#: usr/bin/co2monitor-invoker:117
 msgid "co2monitor startup took too long via 'at now', didn't work."
 msgstr ""
 "co2monitor über 'at now' zu starten, hat zu lange gedauert, nicht "
 "funktioniert."
 
-#: usr/bin/co2monitor-invoker:115
+#: usr/bin/co2monitor-invoker:133
 msgid "no DEVNAME environment variable given. Aborting."
 msgstr "keine DEVNAME Umgebungsvariable. Abbruch."
 
-#: usr/bin/co2monitor-invoker:118
+#: usr/bin/co2monitor-invoker:136
 msgid "DEVNAME environment variable: {}"
 msgstr "DEVNAME Umgebungsvariable: {}"
 
-#: usr/bin/co2monitor-invoker:121
+#: usr/bin/co2monitor-invoker:139
 msgid "DEVNAME environment variable '{}' is a non-existant file.  Aborting."
 msgstr "DEVNAME Umgebungsvariable '{}' ist keine existierende Datei. Abbruch."
 
