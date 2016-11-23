@@ -130,7 +130,7 @@ else:
 # get DEVNAME environment variable
 DEVNAME = os.environ.get('DEVNAME')
 if not DEVNAME: # stop if there is no devname environment variable
-    logger.critical(_("no DEVNAME environment variable given. Aborting."))
+    logger.info(_("no DEVNAME environment variable given. Nothing more to do."))
     sys.exit(1)
 
 logger.debug(_("DEVNAME environment variable: {}".format(DEVNAME)))

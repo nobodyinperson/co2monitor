@@ -45,7 +45,7 @@ systembus = dbus.SystemBus() # the system bus
 
 # co2monitor is already running
 if systembus.name_has_owner(CO2MONITOR_BUSNAME):
-    logger.warning(_("co2monitor is already running. Aborting."))
+    logger.info(_("co2monitor is already running. Aborting."))
     sys.exit()
 
 

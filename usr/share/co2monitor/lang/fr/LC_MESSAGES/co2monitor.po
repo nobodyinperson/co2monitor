@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-23 16:15+0100\n"
-"PO-Revision-Date: 2016-11-22 13:51+0100\n"
+"POT-Creation-Date: 2016-11-23 17:30+0100\n"
+"PO-Revision-Date: 2016-11-23 17:37+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: fr_FR\n"
@@ -17,22 +17,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 1.8.7.1\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-
-#: usr/lib/co2monitor/python/co2monitor/gui.py:76
-msgid "Welcome to Co2monitor!"
-msgstr "Bienvenue à Co2monitor!"
-
-#: usr/lib/co2monitor/python/co2monitor/gui.py:84
-msgid "Starting GLib main loop..."
-msgstr "lance GLib boucle... "
-
-#: usr/lib/co2monitor/python/co2monitor/gui.py:86
-msgid "GLib main loop ended."
-msgstr "GLib boucle terminé."
-
-#: usr/lib/co2monitor/python/co2monitor/gui.py:90
-msgid "Received quitting signal."
-msgstr "reçu signal de interruption."
 
 #: usr/lib/co2monitor/python/co2monitor/device.py:31
 msgid "Device file '{}' does not exist."
@@ -73,6 +57,22 @@ msgstr "Essai de reconnexion..."
 #: usr/lib/co2monitor/python/co2monitor/device.py:150
 msgid "Could not reconnect. Aborting."
 msgstr "Ne pourrais pas reconnecter. Interruption."
+
+#: usr/lib/co2monitor/python/co2monitor/gui.py:76
+msgid "Welcome to Co2monitor!"
+msgstr "Bienvenue à Co2monitor!"
+
+#: usr/lib/co2monitor/python/co2monitor/gui.py:84
+msgid "Starting GLib main loop..."
+msgstr "lance GLib boucle... "
+
+#: usr/lib/co2monitor/python/co2monitor/gui.py:86
+msgid "GLib main loop ended."
+msgstr "GLib boucle terminé."
+
+#: usr/lib/co2monitor/python/co2monitor/gui.py:90
+msgid "Received quitting signal."
+msgstr "reçu signal de interruption."
 
 #: usr/lib/co2monitor/python/co2monitor/service.py:82
 msgid "received stop signal {},"
@@ -188,9 +188,8 @@ msgid "Stopped data logging on device {}"
 msgstr "arrêté enregistrement d'appareil {}"
 
 #: usr/bin/co2monitor-service:48
-#, fuzzy
 msgid "co2monitor is already running. Aborting."
-msgstr "co2monitor marche déja"
+msgstr "co2monitor marche déja. Interruption."
 
 #: usr/bin/co2monitor-invoker:84
 msgid "co2monitor is already running"
@@ -235,8 +234,8 @@ msgstr ""
 "Lancer co2monitor par 'at now' n'a pas marché, ça durait trop longtemps."
 
 #: usr/bin/co2monitor-invoker:133
-msgid "no DEVNAME environment variable given. Aborting."
-msgstr "pas de variable d'environnement DEVNAME. Interruption."
+msgid "no DEVNAME environment variable given. Nothing more to do."
+msgstr "pas de variable d'environnement DEVNAME. Rien à faire."
 
 #: usr/bin/co2monitor-invoker:136
 msgid "DEVNAME environment variable: {}"
