@@ -14,6 +14,7 @@ import time
 from gi.repository import GLib
 
 from . import device
+from . import utils
 
 # define names
 CO2MONITOR_BUSNAME    = "de.nobodyinperson.co2monitor"
