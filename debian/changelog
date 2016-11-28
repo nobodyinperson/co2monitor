@@ -1,3 +1,9 @@
+co2monitor (0.0.10) unstable; urgency=medium
+
+  * better hotplug handling
+
+ -- Yann Büchau <yann.buechau@web.de>  Mon, 28 Nov 2016 11:24:14 +0100
+
 co2monitor (0.0.9) unstable; urgency=medium
 
   * fix multiple co2monitor-service invocation bug

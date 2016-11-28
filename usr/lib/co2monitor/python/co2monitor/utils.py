@@ -19,8 +19,7 @@ def splitpath(path):
 
 # convert a device file path to a DBus object name last part
 def devicefile2objectname(devicefile):
-    p = [x.replace("-","--") for x in splitpath(devicefile)]
-    return "-".join(p)
+    return "_".join(splitpath(os.path.realpath(devicefile)))
 
 
 # # convert a DBus object name last part to a device file path
@@ -45,3 +44,6 @@ def devicefile2objectname(devicefile):
 #             c = True
 #         print("---------------")
 #     return os.path.join(*res)
+
+
+

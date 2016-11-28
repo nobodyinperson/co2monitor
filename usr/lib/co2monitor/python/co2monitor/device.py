@@ -28,7 +28,7 @@ class co2device(object):
     def device(self, device):
         try: 
             if not os.path.exists(device):
-                raise TypeError(_("Device file '{}' does not exist.").format(
+                raise OSError(_("Device file '{}' does not exist.").format( 
                     device))
         except: raise
         # set the new device file

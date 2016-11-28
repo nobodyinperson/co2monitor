@@ -2,6 +2,7 @@
 import dbus
 import dbus.service
 import dbus.mainloop.glib
+from xml.etree import ElementTree
 
 import logging
 import configparser 
@@ -43,9 +44,9 @@ class Co2MonitorService(dbus.service.Object):
 
         self.loop = GLib.MainLoop() # create mainloop
 
-        systembus = dbus.SystemBus() # the system bus
-        systembus.request_name(CO2MONITOR_BUSNAME) # request the bus name
-        bus_name = dbus.service.BusName(CO2MONITOR_BUSNAME, systembus) # create bus name
+        self.systembus = dbus.SystemBus() # the system bus
+        self.systembus.request_name(CO2MONITOR_BUSNAME) # request the bus name
+        bus_name = dbus.service.BusName(CO2MONITOR_BUSNAME, self.systembus) # create bus name
         # register the object on the bus name
         dbus.service.Object.__init__(self, bus_name, CO2MONITOR_OBJECTPATH)
 
@@ -89,19 +90,55 @@ class Co2MonitorService(dbus.service.Object):
         self.loop.run()
         self.logger.info(_("Service stopped"))
 
-    @dbus.service.method(CO2MONITOR_INTERFACE, in_signature='s', out_signature='')
+    # get a list of exported objects under a path (only one layer deep)
+    # thanks to don_crissti on http://unix.stackexchange.com/a/203678
+    def get_monitored_devices_objects(self):
+        res = []
+        # iface = dbus.Interface(self, 'org.freedesktop.DBus.Introspectable')
+        xml_string = self.Introspect(CO2MONITOR_OBJECTPATH,self.connection)
+        for child in ElementTree.fromstring(xml_string):
+            if child.tag == 'node':
+                new_path = '/'.join((CO2MONITOR_OBJECTPATH, child.attrib['name']))
+                res.append(new_path)
+        return res
+
+    @dbus.service.method(CO2MONITOR_INTERFACE, 
+        in_signature='s', out_signature='b')
     def start_device_logging(self, devicefile):
         self.logger.info(_("received request to start logging on device {}").format(
             devicefile))
-        thread = LogThread(devicefile = devicefile) # logger object
-        self.logger.info(_("starting logging thread for device {}").format(
-            devicefile))
-        # same logger as service
-        thread.set_logger(self.logger)
-        # same config as service
-        thread.set_config(self.config)
-        thread.daemon = True # let this thread be a daemon thread
-        thread.start()
+        # create the object path name on the bus name
+        objectpath = "/".join([CO2MONITOR_OBJECTPATH,
+            utils.devicefile2objectname(devicefile)])
+        # check if device is already monitored
+        monitored_devices = self.get_monitored_devices_objects()
+        if objectpath in monitored_devices:
+            self.logger.warning(" ".join([
+            _("There is already a logging thread for device {}."),
+            _("This is odd... I better do nothing.")
+            ]).format(devicefile))
+            return False
+        else:
+            try:
+                thread = LogThread(devicefile = devicefile) # logger object
+                self.logger.info(_("starting logging thread for device {}").format(
+                    devicefile))
+                # same logger as service
+                thread.set_logger(self.logger)
+                # same config as service
+                thread.set_config(self.config)
+                thread.daemon = True # let this thread be a daemon thread
+                thread.start()
+            except OSError:
+                self.logger.critical(_("Could not access the device file '{}'."
+                    ).format(devicefile))
+                return False
+            except:
+                self.logger.critical(_(
+                    "Something went wrong with device file '{}'."
+                    ).format(devicefile))
+                return False
+            return True
 
 
     @dbus.service.method(CO2MONITOR_INTERFACE, in_signature='', out_signature='s')
@@ -136,9 +173,9 @@ class LogThread(threading.Thread, dbus.service.Object):
         dbus.mainloop.glib.threads_init()
         GLib.threads_init()
 
-        systembus = dbus.SystemBus() # the system bus
-        systembus.request_name(CO2MONITOR_BUSNAME) # request the bus name
-        bus_name = dbus.service.BusName(CO2MONITOR_BUSNAME, systembus) # create bus name
+        self.systembus = dbus.SystemBus() # the system bus
+        self.systembus.request_name(CO2MONITOR_BUSNAME) # request the bus name
+        bus_name = dbus.service.BusName(CO2MONITOR_BUSNAME, self.systembus) # create bus name
 
         self.devicefile = devicefile
 
@@ -147,7 +184,7 @@ class LogThread(threading.Thread, dbus.service.Object):
 
         # register the object on the bus name
         objectpath = "/".join([CO2MONITOR_OBJECTPATH,
-            os.path.basename(self.devicefile)])
+            utils.devicefile2objectname(self.devicefile)])
         dbus.service.Object.__init__(self, bus_name, objectpath)
         self.update_status(_("idle"))
         threading.Thread.__init__(self)
@@ -198,6 +235,8 @@ class LogThread(threading.Thread, dbus.service.Object):
         self.logger.debug(_("Shutting down logging thread of device {}").format(
             self.devicefile))
         self.remove_from_connection()
+        self.logger.debug(_("logging thread for device {} was shut down properly.").format(
+            self.devicefile))
         sys.exit()
 
     # logloop
