@@ -8,7 +8,7 @@ import logging
 import configparser 
 import signal
 import threading
-import os
+import os, sys
 import csv
 import time
 
