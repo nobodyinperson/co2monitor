@@ -37,7 +37,9 @@ while(TRUE) {
     ALLFILES <- Sys.glob(paste(DATADIR,"*.csv",sep="/"))
     if(length(ALLFILES)<1) {
         stop(paste("no csv files in ",DATADIR))
-        }
+    }
+    # sort the files by creation time
+    ALLFILES <- ALLFILES[order(file.info(ALLFILES)$ctime)]
     NEWESTFILE <- rev(ALLFILES)[1]
 
     if(ALL) { # read all files

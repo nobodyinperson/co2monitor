@@ -1,6 +1,7 @@
-co2monitor (0.0.11) UNRELEASED; urgency=medium
+co2monitor (0.0.11) unstable; urgency=medium
 
   * fix another 'import sys' bug... *sigh*... 
+  * correct file sorting by creation time in plot.R
 
  -- Yann Büchau <yann.buechau@web.de>  Mon, 28 Nov 2016 14:13:21 +0100
 
