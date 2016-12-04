@@ -1,9 +1,12 @@
 # co2monitor
+
 Automatic data logging for AirCO2ntrol mini USB co2 measurement devices.
 
 **Hint**: This application is compatible with Raspbian.
 
 **Note**: This application is in development state.
+
+![co2monitor svg](https://cloud.githubusercontent.com/assets/19148271/20570532/44d42ab0-b1a4-11e6-97aa-cef5713e21cc.png)
 
 ## Background
 
