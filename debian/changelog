@@ -1,3 +1,9 @@
+co2monitor (0.0.12) unstable; urgency=medium
+
+  * .desktop-file starts plot.R, not the unfinished gui
+
+ -- Yann Büchau <yann.buechau@web.de>  Wed, 08 Mar 2017 20:03:18 +0100
+
 co2monitor (0.0.11) unstable; urgency=medium
 
   * fix another 'import sys' bug... *sigh*... 

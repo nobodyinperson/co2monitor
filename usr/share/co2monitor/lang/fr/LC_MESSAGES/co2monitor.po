@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-28 13:54+0100\n"
+"POT-Creation-Date: 2017-03-08 20:00+0100\n"
 "PO-Revision-Date: 2016-11-28 14:02+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -17,22 +17,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 1.8.7.1\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-
-#: usr/lib/co2monitor/python/co2monitor/gui.py:76
-msgid "Welcome to Co2monitor!"
-msgstr "Bienvenue à Co2monitor!"
-
-#: usr/lib/co2monitor/python/co2monitor/gui.py:84
-msgid "Starting GLib main loop..."
-msgstr "lance GLib boucle... "
-
-#: usr/lib/co2monitor/python/co2monitor/gui.py:86
-msgid "GLib main loop ended."
-msgstr "GLib boucle terminé."
-
-#: usr/lib/co2monitor/python/co2monitor/gui.py:90
-msgid "Received quitting signal."
-msgstr "reçu signal de interruption."
 
 #: usr/lib/co2monitor/python/co2monitor/device.py:31
 msgid "Device file '{}' does not exist."
@@ -73,6 +57,22 @@ msgstr "Essai de reconnexion..."
 #: usr/lib/co2monitor/python/co2monitor/device.py:150
 msgid "Could not reconnect. Aborting."
 msgstr "Ne pourrais pas reconnecter. Interruption."
+
+#: usr/lib/co2monitor/python/co2monitor/gui.py:76
+msgid "Welcome to Co2monitor!"
+msgstr "Bienvenue à Co2monitor!"
+
+#: usr/lib/co2monitor/python/co2monitor/gui.py:84
+msgid "Starting GLib main loop..."
+msgstr "lance GLib boucle... "
+
+#: usr/lib/co2monitor/python/co2monitor/gui.py:86
+msgid "GLib main loop ended."
+msgstr "GLib boucle terminé."
+
+#: usr/lib/co2monitor/python/co2monitor/gui.py:90
+msgid "Received quitting signal."
+msgstr "reçu signal de interruption."
 
 #: usr/lib/co2monitor/python/co2monitor/service.py:84
 msgid "received stop signal {},"
@@ -145,8 +145,7 @@ msgstr "en train d'éteindre le thread d'enregistrement pour appareil {} "
 
 #: usr/lib/co2monitor/python/co2monitor/service.py:238
 msgid "logging thread for device {} was shut down properly."
-msgstr ""
-"le thread d'enregistrement pour appareil {} était arrêtré proprement."
+msgstr "le thread d'enregistrement pour appareil {} était arrêtré proprement."
 
 #: usr/lib/co2monitor/python/co2monitor/service.py:244
 msgid "Starting data logging on device {}"
