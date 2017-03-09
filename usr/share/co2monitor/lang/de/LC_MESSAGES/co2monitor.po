@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-08 20:00+0100\n"
+"POT-Creation-Date: 2017-03-09 09:44+0100\n"
 "PO-Revision-Date: 2016-11-28 14:04+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -197,15 +197,15 @@ msgstr "Nachbearbeitung der Rohdaten"
 msgid "writing data to file"
 msgstr "schreibe Daten in Aufzeichnungsdatei"
 
-#: usr/lib/co2monitor/python/co2monitor/service.py:323
+#: usr/lib/co2monitor/python/co2monitor/service.py:332
 msgid "stopped logging."
 msgstr "Datenaufzeichnung beendet."
 
-#: usr/lib/co2monitor/python/co2monitor/service.py:324
+#: usr/lib/co2monitor/python/co2monitor/service.py:333
 msgid "closed data logging file '{}'"
 msgstr "Datenaufzeichnungsdatei '{}' geschlossen"
 
-#: usr/lib/co2monitor/python/co2monitor/service.py:326
+#: usr/lib/co2monitor/python/co2monitor/service.py:335
 msgid "Stopped data logging on device {}"
 msgstr "beende Datenaufzeichnung auf Gerät {}"
 

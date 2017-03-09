@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-08 20:00+0100\n"
+"POT-Creation-Date: 2017-03-09 09:44+0100\n"
 "PO-Revision-Date: 2016-11-28 14:02+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -195,15 +195,15 @@ msgstr "travail postérieur des données crus"
 msgid "writing data to file"
 msgstr "écrire les données au fichier"
 
-#: usr/lib/co2monitor/python/co2monitor/service.py:323
+#: usr/lib/co2monitor/python/co2monitor/service.py:332
 msgid "stopped logging."
 msgstr "enregistrement arrêté."
 
-#: usr/lib/co2monitor/python/co2monitor/service.py:324
+#: usr/lib/co2monitor/python/co2monitor/service.py:333
 msgid "closed data logging file '{}'"
 msgstr "fichier d'enregistrement '{}' fermé"
 
-#: usr/lib/co2monitor/python/co2monitor/service.py:326
+#: usr/lib/co2monitor/python/co2monitor/service.py:335
 msgid "Stopped data logging on device {}"
 msgstr "arrêté enregistrement d'appareil {}"
 

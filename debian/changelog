@@ -1,3 +1,9 @@
+co2monitor (0.0.13) unstable; urgency=medium
+
+  * add configurable sleep interval between readings
+
+ -- Yann Büchau <yann.buechau@web.de>  Thu, 09 Mar 2017 09:46:59 +0100
+
 co2monitor (0.0.12) unstable; urgency=medium
 
   * .desktop-file starts plot.R, not the unfinished gui

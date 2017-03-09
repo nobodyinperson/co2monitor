@@ -318,6 +318,15 @@ class LogThread(threading.Thread, dbus.service.Object):
                     measold.update(meas)
                 else: # measurement didn't work
                     break # exit logloop
+                
+                # wait predefined number of seconds
+                try: 
+                    waittime = int(
+                        self.config["data-logging"].getint("interval"))
+                    assert waittime > 0
+                except: 
+                    waittime = 0
+                time.sleep(waittime)
 
             # logging ended
             self.logger.info(_("stopped logging."))
